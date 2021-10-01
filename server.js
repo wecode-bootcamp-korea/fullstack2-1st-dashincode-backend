@@ -1,20 +1,20 @@
 import http from 'http';
+import dotenv from 'dotenv';
 import express from 'express';
-import { test } from './test';
 
+dotenv.config();
+const PORT = 8000 | process.env.DATABASE_URL;
 const app = express();
 
-app.get('/', (req, res) => {
-  res.json({ message: '/ endpoint' });
+app.get('/ping', (req, res) => {
+  res.json({ message: 'pong' });
 });
-
-app.get('/', test);
 
 const server = http.createServer(app);
 
 const start = async () => {
   try {
-    await app.listen(8080, () => console.log(`Server is running on 8080`));
+    await app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
   } catch (err) {
     console.log(err);
   }
