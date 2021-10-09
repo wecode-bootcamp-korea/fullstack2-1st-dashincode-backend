@@ -38,6 +38,7 @@ model Product {
   discountedPrice Decimal?     @map("discounted_price")
   description     String
   storage         String
+  clicked         Int          @default(0)
   shippingCompany String       @map("shipping_company")
   createdAt       DateTime     @default(now()) @map("created_at")
   updatedAt       DateTime?    @updatedAt @map("updated_at")
