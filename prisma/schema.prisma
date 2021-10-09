@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model MainCategory {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  subCategory SubCategory[]
+  product     Product[]
+
+  @@map("main_categories")
+}
+
+model SubCategory {
+  id             Int          @id @default(autoincrement())
+  name           String
+  mainCategoryId Int          @map("main_category_id")
+  mainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id])
+
+  product Product[]
+
+  @@map("sub_categories")
+}
+
+model Product {
+  id              Int          @id @default(autoincrement())
+  name            String
+  price           Decimal
+  discountedPrice Decimal?     @map("discounted_price")
+  description     String
+  storage         String
+  shippingCompany String       @map("shipping_company")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime?    @updatedAt @map("updated_at")
+  deletedAt       DateTime?    @map("deleted_at")
+  isDeleted       Boolean      @default(false) @map("is_deleted")
+  mainCategoryId  Int          @map("main_category_id")
+  mainCategory    MainCategory @relation(fields: [mainCategoryId], references: [id])
+  subCategoryId   Int          @map("sub_category_id")
+  subCategory     SubCategory  @relation(fields: [subCategoryId], references: [id])
+
+  ProductShipment  ProductShipment[]
+  ProductThumbnail ProductThumbnail[]
+  DescriptionImage DescriptionImage[]
+  Like             Like[]
+  Comment          Comment[]
+  Cart             Cart[]
+
+  @@map("products")
+}
+
+model Shipment {
+  id       Int    @id @default(autoincrement())
+  shipment String
+
+  ProductShipment ProductShipment[]
+
+  @@map("shipments")
+}
+
+model ProductShipment {
+  id         Int      @id @default(autoincrement())
+  productId  Int      @map("product_id")
+  product    Product  @relation(fields: [productId], references: [id])
+  shipmentId Int      @map("shipment_id")
+  shipment   Shipment @relation(fields: [shipmentId], references: [id])
+
+
+  @@map("products_shipments")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique @db.VarChar(200)
+  password  String    @db.VarChar(200)
+  nickname  String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  isDeleted Boolean   @default(false) @map("is_deleted")
+
+  Like    Like[]
+  Comment Comment[]
+  Cart    Cart[]
+  @@map("users")
+}
+
+model ProductThumbnail {
+  id        Int     @id @default(autoincrement())
+  imageUrl  String  @map("image_url") @db.VarChar(2000)
+  isMain    Boolean @map("is_main") @db.TinyInt
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("products_thumbnails")
+}
+
+model DescriptionImage {
+  id        Int     @id @default(autoincrement())
+  imageUrl  String  @map("image_url") @db.VarChar(2000)
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("description_images")
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  userId    Int     @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+
+  @@map("likes")
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  scores    Decimal
+  comment   String    @map("comment") @db.VarChar(1000)
+  imageUrl  String    @map("image_url") @db.VarChar(2000)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  userId    Int       @map("user_id")
+  user      User      @relation(fields: [userId], references: [id])
+  productId Int       @map("product_id")
+  product   Product   @relation(fields: [productId], references: [id])
+
+  @@map("comments")
+}
+
+model Cart {
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  userId    Int     @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("carts")
+}
