@@ -1,7 +1,18 @@
 import { likeDao } from '../models';
 
-const getCategory = async () => {
-  return await likeDao.getCategory();
+const getLike = async (productId, userId) => {
+  return await likeDao.getLike(productId, userId);
 };
 
-export default { getCategory };
+const likeProduct = async (productId, userId) => {
+  const isLiked = await likeDao.getLike(productId, userId);
+  if (!isLiked) {
+    await likeDao.likeProduct(productId, userId);
+    return true;
+  } else {
+    await likeDao.dislikeProduct(productId, userId);
+    return false;
+  }
+};
+
+export default { getLike, likeProduct };

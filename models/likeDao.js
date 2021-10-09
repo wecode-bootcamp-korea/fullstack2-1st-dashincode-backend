@@ -1,10 +1,36 @@
 import prisma from '../prisma';
 
-const getCategory = async () => {
-  const category = await prisma.$queryRaw`
-  SELECT c.id, c.name FROM categories c
-  `;
-  return category;
+const getLike = async (productId, userId) => {
+  const [isLiked] = await prisma.$queryRaw`
+    SELECT EXISTS
+      (SELECT * FROM likes 
+        WHERE 
+          product_id=${productId}
+        AND
+          user_id=${userId})
+    `;
+  return isLiked;
 };
 
-export default { getCategory };
+const likeProduct = async (productId, userId) => {
+  return await prisma.$queryRaw`
+    INSERT INTO 
+      likes 
+      (product_id, user_id) 
+    VALUE 
+      (${productId}, ${userId})
+  `;
+};
+
+const dislikeProduct = async (productId, userId) => {
+  return await prisma.$queryRaw`
+    DELETE FROM
+      likes 
+    WHERE 
+      product_id=${productId} 
+    AND 
+      user_id=${userId}
+  `;
+};
+
+export default { getLike, likeProduct, dislikeProduct };
