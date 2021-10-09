@@ -1,7 +1,5 @@
 {
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
@@ -9,5 +7,6 @@
   },
   "javascript.format.enable": false,
   "eslint.alwaysShowStatus": true,
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" }
 }
