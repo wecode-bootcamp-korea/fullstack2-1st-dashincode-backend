@@ -1,5 +1,5 @@
 import { categoryServices } from '../services';
-import { wrapAsync } from '../utils/wrapAsync'
+import { wrapAsync } from '../utils/wrapAsync';
 
 const getCategory = wrapAsync(async (req, res) => {
   const category = await categoryServices.getCategory();
