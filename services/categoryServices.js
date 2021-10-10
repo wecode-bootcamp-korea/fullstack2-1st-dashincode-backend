@@ -40,4 +40,12 @@ const getCategory = async location => {
   return category;
 };
 
-export default { getCategory };
+const getProductsForEachCategory = async (depth, id) => {
+  if (depth === 'main') {
+    return await categoryDao.getProductsForMainCategory(id);
+  } else if (depth === 'sub') {
+    return await categoryDao.getProductsForSubCategory(id);
+  }
+};
+
+export default { getCategory, getProductsForEachCategory };
