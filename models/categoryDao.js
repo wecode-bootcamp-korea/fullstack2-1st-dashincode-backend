@@ -89,7 +89,7 @@ const getProductsForSubCategory = async id => {
 };
 
 const getBestProducts = async () => {
-  const products = await prisma.$queryRaw`
+  return await prisma.$queryRaw`
     SELECT 
     p.id, 
     p.main_category_id,
@@ -110,8 +110,6 @@ const getBestProducts = async () => {
     ON i.product_id = p.id
     ORDER BY p.clicked DESC LIMIT 48
   `;
-  console.log(products);
-  return products;
   //LIMIT 변경해야함.
   //마지막줄 order by 작동 안하는 이유는?
 };
