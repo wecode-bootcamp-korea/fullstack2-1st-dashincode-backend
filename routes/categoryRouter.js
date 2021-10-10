@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/:location', categoryController.getCategory);
 router.get('/:depth/:id', categoryController.getProductsForEachCategory);
+router.get('/sort/:sort', categoryController.getCategorizedProducts);
 
 export default router;

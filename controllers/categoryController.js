@@ -19,10 +19,24 @@ const getSliderCategory = wrapAsync(async (req, res) => {
 
 const getProductsForEachCategory = wrapAsync(async (req, res) => {
   const { depth, id } = req.params;
-  const category = await categoryServices.getProductsForEachCategory(depth, id);
+  const products = await categoryServices.getProductsForEachCategory(depth, id);
   res.status(200).json({
-    DATA: category,
+    DATA: products,
   });
 });
 
-export default { getCategory, getSliderCategory, getProductsForEachCategory };
+const getCategorizedProducts = wrapAsync(async (req, res) => {
+  const { sort } = req.params;
+  console.log(sort);
+  const products = await categoryServices.getCategorizedProducts(sort);
+  res.status(200).json({
+    DATA: products,
+  });
+});
+
+export default {
+  getCategory,
+  getSliderCategory,
+  getProductsForEachCategory,
+  getCategorizedProducts,
+};

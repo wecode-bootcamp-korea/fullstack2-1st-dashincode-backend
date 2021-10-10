@@ -48,4 +48,20 @@ const getProductsForEachCategory = async (depth, id) => {
   }
 };
 
-export default { getCategory, getProductsForEachCategory };
+const getCategorizedProducts = async sort => {
+  if (sort === 'best') {
+    return await categoryDao.getBestProducts();
+  } else if (sort === 'new') {
+    return await categoryDao.getNewProducts();
+  } else if (sort === 'dashindelivery') {
+    return await categoryDao.getDashinDeliveryProducts();
+  } else if (sort === 'cooldelivery') {
+    return await categoryDao.getCoolDeliveryProducts();
+  }
+};
+
+export default {
+  getCategory,
+  getProductsForEachCategory,
+  getCategorizedProducts,
+};
