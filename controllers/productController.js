@@ -1,12 +1,20 @@
 import { productServices } from '../services';
 import { wrapAsync } from '../utils/wrapAsync'
 
-const getCategory = wrapAsync(async (req, res) => {
-  const category = await productServices.getCategory();
-  res.status(200).json({
-    message: 'SUCCESS',
-    category,
-  });
+const getProducts = wrapAsync(async (req, res) => {
+  const products = await productServices.getProducts();
+  // res.status(200).json({
+  //   message: 'SUCCESS',
+  //   category,
+  // });
+  res.json(products);
 });
 
-export default { getCategory };
+const getProduct = wrapAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const product = await productServices.getProduct(id);
+  res.json(product);
+});
+
+export default { getProducts, getProduct };
