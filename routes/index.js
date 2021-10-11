@@ -6,7 +6,7 @@ import productRouter from './productRouter';
 import likeRouter from './likeRouter';
 import commentRouter from './commentRouter';
 import cartRouter from './cartRouter';
-import loginRouter from './userRouter';
+import loginRouter from './loginRouter';
 import signupRouter from './signUpRouter';
 
 router.use('/category', categoryRouter);
