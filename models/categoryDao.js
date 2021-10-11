@@ -108,10 +108,8 @@ const getBestProducts = async () => {
     FROM products p
     JOIN products_thumbnails i
     ON i.product_id = p.id
-    ORDER BY p.clicked DESC LIMIT 48
+    ORDER BY p.clicked DESC LIMIT 1
   `;
-  //LIMIT 변경해야함.
-  //마지막줄 order by 작동 안하는 이유는?
 };
 
 const getNewProducts = async () => {
@@ -136,7 +134,6 @@ const getNewProducts = async () => {
     ON i.product_id = p.id
     ORDER BY p.created_at DESC LIMIT 1
   `;
-  //LIMIT 변경해야함.
 };
 
 const getDashinDeliveryProducts = async () => {
@@ -162,7 +159,6 @@ const getDashinDeliveryProducts = async () => {
     WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 2) = 1
     ORDER BY p.id DESC LIMIT 48
   `;
-  //LIMIT 변경해야함.
 };
 
 const getCoolDeliveryProducts = async () => {
@@ -188,7 +184,31 @@ const getCoolDeliveryProducts = async () => {
     WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 3) = 1
     ORDER BY p.id DESC LIMIT 48
   `;
-  //LIMIT 변경해야함.
+};
+
+const getMainPageProducts = async () => {
+  return await prisma.$queryRaw`
+    SELECT 
+    p.id, 
+    p.main_category_id,
+    p.sub_category_id,
+    p.name, 
+    i.image_url,
+    p.price,
+    p.discounted_price,
+    p.description,
+    date_format(p.created_at, '%Y-%m-%d') AS created_at,
+    (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) AS reviewCount,
+    (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 1) AS isFree,
+    (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 2) AS isDashin,
+    (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 3) AS isCool,
+    (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 4) AS isBasic
+    FROM products p
+    JOIN products_thumbnails i
+    ON i.product_id = p.id
+    WHERE (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) = 0
+    ORDER BY p.id DESC LIMIT 1
+  `;
 };
 
 export default {
@@ -200,4 +220,5 @@ export default {
   getNewProducts,
   getDashinDeliveryProducts,
   getCoolDeliveryProducts,
+  getMainPageProducts,
 };

@@ -57,6 +57,8 @@ const getCategorizedProducts = async sort => {
     return await categoryDao.getDashinDeliveryProducts();
   } else if (sort === 'cooldelivery') {
     return await categoryDao.getCoolDeliveryProducts();
+  } else if (sort === 'mainpage') {
+    return await categoryDao.getMainPageProducts();
   }
 };
 
