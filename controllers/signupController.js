@@ -2,10 +2,15 @@ import { signupServices } from '../services';
 import { wrapAsync } from '../utils/wrapAsync';
 
 const getCategory = wrapAsync(async (req, res) => {
-  const category = await signupServices.getCategory();
-  res.status(200).json({
-    message: 'SUCCESS',
-    category,
+  const { email, password, nickname } = req.body;
+  const signupUser = await signupServices.getCategory(
+    email,
+    password,
+    nickname
+  );
+  res.status(201).json({
+    message: 'CREATED',
+    user: signupUser,
   });
 });
 
