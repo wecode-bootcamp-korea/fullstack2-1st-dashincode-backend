@@ -34,10 +34,11 @@ model SubCategory {
 model Product {
   id              Int          @id @default(autoincrement())
   name            String
-  price           Decimal
-  discountedPrice Decimal?     @map("discounted_price")
+  price           Decimal      @db.Decimal(6, 0)
+  discountedPrice Decimal?     @map("discounted_price") @db.Decimal(6, 0)
   description     String
   storage         String
+  clicked         Int          @default(0)
   shippingCompany String       @map("shipping_company")
   createdAt       DateTime     @default(now()) @map("created_at")
   updatedAt       DateTime?    @updatedAt @map("updated_at")
