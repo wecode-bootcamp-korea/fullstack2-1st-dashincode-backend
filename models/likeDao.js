@@ -1,6 +1,6 @@
 import prisma from '../prisma';
 
-const getLike = async (productId, userId) => {
+const getLikedProduct = async (productId, userId) => {
   const [isLiked] = await prisma.$queryRaw`
     SELECT EXISTS
       (SELECT * FROM likes 
@@ -33,4 +33,4 @@ const deleteLike = async (productId, userId) => {
   `;
 };
 
-export default { getLike, addLike, deleteLike };
+export default { getLikedProduct, addLike, deleteLike };

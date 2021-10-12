@@ -3,8 +3,8 @@ import { likeController } from '../controllers';
 
 const router = express.Router();
 
-router.get('/:id', likeController.getLike);
-router.post('/:id', likeController.likeProduct);
+router.get('/:productId', likeController.getLikedProduct);
+router.post('/:productId', likeController.likeProduct);
 //token validation 미들웨어 필요
 
 export default router;
