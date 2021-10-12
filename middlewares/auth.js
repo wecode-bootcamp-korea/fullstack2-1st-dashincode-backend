@@ -8,7 +8,6 @@ export const authMiddleware = () => {
     if (user) {
       try {
         const userId = await loginServices.verifyToken(user);
-        console.log(userId);
         if (userId) {
           const isUser = await loginServices.getCategory(userId.id);
           if (isUser) {
