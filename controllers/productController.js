@@ -1,20 +1,15 @@
 import { productServices } from '../services';
-import { wrapAsync } from '../utils/wrapAsync'
+import { wrapAsync } from '../utils/wrapAsync';
 
-const getProducts = wrapAsync(async (req, res) => {
-  const products = await productServices.getProducts();
-  // res.status(200).json({
-  //   message: 'SUCCESS',
-  //   category,
-  // });
-  res.json(products);
+const isProductDetail = wrapAsync(async (req, res) => {
+  const { id } = req.query;
+  const productDetail = await productServices.isProductDetail(id);
+
+  // const productImages = await productServices.getProductImages(id);
+  // description image로 해야되나???
+
+  res.json(productDetail);
 });
 
-const getProduct = wrapAsync(async (req, res) => {
-  const id = req.params.id;
 
-  const product = await productServices.getProduct(id);
-  res.json(product);
-});
-
-export default { getProducts, getProduct };
+export default { isProductDetail };
