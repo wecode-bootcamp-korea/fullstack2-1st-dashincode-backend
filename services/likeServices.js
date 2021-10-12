@@ -4,6 +4,7 @@ const getLike = async (productId, userId) => {
   return await likeDao.getLike(productId, userId);
 };
 
+<<<<<<< HEAD
 const likeProduct = async (productId, userId) => {
   const isLiked = await likeDao.getLike(productId, userId);
   if (!isLiked) {
@@ -16,3 +17,6 @@ const likeProduct = async (productId, userId) => {
 };
 
 export default { getLike, likeProduct };
+=======
+export default { getCategory };
+>>>>>>> main

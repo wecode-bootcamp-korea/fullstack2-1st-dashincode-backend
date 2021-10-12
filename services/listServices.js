@@ -22,4 +22,17 @@ const getCategorizedProducts = async sort => {
   }
 };
 
-export default { getProductsForEachCategory, getCategorizedProducts };
+const searchProducts = async value => {
+  const allProducts = await listDao.searchProducts();
+  const filteredProducts = allProducts.filter(
+    product =>
+      product.name.includes(value) || product.description.includes(value)
+  );
+  return filteredProducts;
+};
+
+export default {
+  getProductsForEachCategory,
+  getCategorizedProducts,
+  searchProducts,
+};

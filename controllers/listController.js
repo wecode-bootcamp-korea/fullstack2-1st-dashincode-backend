@@ -16,4 +16,18 @@ const getCategorizedProducts = wrapAsync(async (req, res) => {
     DATA: products,
   });
 });
-export default { getProductsForEachCategory, getCategorizedProducts };
+
+const searchProducts = wrapAsync(async (req, res) => {
+  // const value = decodeURIComponent(req.params.value);
+  const { value } = req.params;
+  const products = await listServices.searchProducts(value);
+  res.status(200).json({
+    DATA: products,
+  });
+});
+
+export default {
+  getProductsForEachCategory,
+  getCategorizedProducts,
+  searchProducts,
+};

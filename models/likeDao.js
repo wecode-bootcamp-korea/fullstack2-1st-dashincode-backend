@@ -33,4 +33,8 @@ const dislikeProduct = async (productId, userId) => {
   `;
 };
 
+<<<<<<< HEAD
 export default { getLike, likeProduct, dislikeProduct };
+=======
+export default { getCategory };
+>>>>>>> main
