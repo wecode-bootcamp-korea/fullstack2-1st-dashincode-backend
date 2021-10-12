@@ -6,12 +6,14 @@ export const authMiddleware = () => {
     const { user } = req.cookies;
 
     if (user) {
+      console.log(user);
       try {
         const userId = await loginServices.verifyToken(user);
+        console.log(userId);
         if (userId) {
-          const isUser = await loginServices.getCategory(userId.id);
+          const isUser = await loginServices.getUser(userId.id);
           if (isUser) {
-            req.user = user;
+            return (req.user = user);
           }
         }
       } catch {

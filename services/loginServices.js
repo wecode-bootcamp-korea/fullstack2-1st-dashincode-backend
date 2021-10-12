@@ -14,4 +14,17 @@ const getUser = async (email, password) => {
   }
 };
 
-export default { getUser };
+const verifyToken = async token => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(secret);
+        resolve(decoded);
+      }
+    });
+  });
+};
+
+export default { getUser, verifyToken };

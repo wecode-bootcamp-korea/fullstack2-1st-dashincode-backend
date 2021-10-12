@@ -3,6 +3,7 @@ import { wrapAsync } from '../utils/wrapAsync';
 import { ERRORS } from '../utils/error';
 
 const getUser = wrapAsync(async (req, res) => {
+  console.log(req.user);
   const { email, password } = req.body;
   try {
     const token = await loginServices.getUser(email, password);
