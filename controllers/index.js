@@ -5,6 +5,8 @@ import cartController from './cartController';
 import likeController from './likeController';
 import loginController from './loginController';
 import signupController from './signupController';
+import searchController from './searchController';
+import listController from './listController';
 
 export {
   categoryController,
@@ -14,4 +16,6 @@ export {
   likeController,
   loginController,
   signupController,
+  searchController,
+  listController,
 };

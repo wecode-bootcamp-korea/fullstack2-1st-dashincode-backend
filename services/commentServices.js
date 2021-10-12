@@ -1,11 +1,7 @@
 import { commentDao } from '../models';
 
-const addComment = async() => {
-  return await commentDao.addComment();
-}
+const getCategory = async () => {
+  return await commentDao.getCategory();
+};
 
-const getCommentList = async() => {
-  return await commentDao.getCommentList();
-
-}
-export default { addComment, getCommentList };
+export default { getCategory };
