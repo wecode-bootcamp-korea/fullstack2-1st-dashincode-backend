@@ -12,7 +12,7 @@ const getLike = async (productId, userId) => {
   return isLiked;
 };
 
-const likeProduct = async (productId, userId) => {
+const addLike = async (productId, userId) => {
   return await prisma.$queryRaw`
     INSERT INTO 
       likes 
@@ -22,7 +22,7 @@ const likeProduct = async (productId, userId) => {
   `;
 };
 
-const dislikeProduct = async (productId, userId) => {
+const deleteLike = async (productId, userId) => {
   return await prisma.$queryRaw`
     DELETE FROM
       likes 
@@ -33,8 +33,4 @@ const dislikeProduct = async (productId, userId) => {
   `;
 };
 
-<<<<<<< HEAD
-export default { getLike, likeProduct, dislikeProduct };
-=======
-export default { getCategory };
->>>>>>> main
+export default { getLike, addLike, deleteLike };
