@@ -1,12 +1,12 @@
 import prisma from '../prisma';
 
-const getUsersByEmailModel = async email => {
+const getUsersByEmail = async email => {
   return await prisma.$queryRaw`
-    SELECT * FROM users WHERE email=${email};
+    SELECT email from users WHERE email=${email};
   `;
 };
 
-const getCategory = async (email, password, nickname) => {
+const insertUser = async (email, password, nickname) => {
   return await prisma.$queryRaw`
     INSERT INTO
       users (
@@ -22,4 +22,4 @@ const getCategory = async (email, password, nickname) => {
     `;
 };
 
-export default { getCategory, getUsersByEmailModel };
+export default { insertUser, getUsersByEmail };
