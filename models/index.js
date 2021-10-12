@@ -6,6 +6,7 @@ import likeDao from './likeDao';
 import loginDao from './loginDao';
 import signupDao from './signupDao';
 import searchDao from './searchDao';
+import listDao from './listDao';
 
 export {
   categoryDao,
@@ -16,4 +17,5 @@ export {
   loginDao,
   signupDao,
   searchDao,
+  listDao,
 };

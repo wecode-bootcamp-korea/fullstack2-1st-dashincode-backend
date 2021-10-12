@@ -6,6 +6,7 @@ import likeServices from './likeServices';
 import loginServices from './loginServices';
 import signupServices from './signupServices';
 import searchServices from './searchServices';
+import listServices from './listServices';
 
 export {
   categoryServices,
@@ -16,4 +17,5 @@ export {
   loginServices,
   signupServices,
   searchServices,
+  listServices,
 };

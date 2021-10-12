@@ -9,24 +9,6 @@ const getCategory = wrapAsync(async (req, res) => {
   });
 });
 
-const getProductsForEachCategory = wrapAsync(async (req, res) => {
-  const { depth, id } = req.params;
-  const products = await categoryServices.getProductsForEachCategory(depth, id);
-  res.status(200).json({
-    DATA: products,
-  });
-});
-
-const getCategorizedProducts = wrapAsync(async (req, res) => {
-  const { sort } = req.params;
-  const products = await categoryServices.getCategorizedProducts(sort);
-  res.status(200).json({
-    DATA: products,
-  });
-});
-
 export default {
   getCategory,
-  getProductsForEachCategory,
-  getCategorizedProducts,
 };

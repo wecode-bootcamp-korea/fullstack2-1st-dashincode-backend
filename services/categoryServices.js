@@ -40,30 +40,6 @@ const getCategory = async location => {
   return category;
 };
 
-const getProductsForEachCategory = async (depth, id) => {
-  if (depth === 'main') {
-    return await categoryDao.getProductsForMainCategory(id);
-  } else if (depth === 'sub') {
-    return await categoryDao.getProductsForSubCategory(id);
-  }
-};
-
-const getCategorizedProducts = async sort => {
-  if (sort === 'best') {
-    return await categoryDao.getBestProducts();
-  } else if (sort === 'new') {
-    return await categoryDao.getNewProducts();
-  } else if (sort === 'dashindelivery') {
-    return await categoryDao.getDashinDeliveryProducts();
-  } else if (sort === 'cooldelivery') {
-    return await categoryDao.getCoolDeliveryProducts();
-  } else if (sort === 'mainpage') {
-    return await categoryDao.getMainPageProducts();
-  }
-};
-
 export default {
   getCategory,
-  getProductsForEachCategory,
-  getCategorizedProducts,
 };
