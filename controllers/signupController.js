@@ -10,6 +10,7 @@ const getCategory = wrapAsync(async (req, res) => {
   );
   res.status(201).json({
     message: 'CREATED',
+    signupUser,
   });
 });
 
