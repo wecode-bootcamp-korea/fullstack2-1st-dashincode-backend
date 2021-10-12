@@ -1,13 +1,14 @@
 import prisma from '../prisma';
 
 const addCartList = async (addedProduct, userId) => {
+  const { productId, productQuantity } = addedProduct;
   return await prisma.$queryRaw`
     INSERT INTO
       carts
     VALUES
       (product_id, quantity, user_id)
     ON DUPLICATE KEY UPDATE
-      product_id = ${addedProduct.product_id} quantity=${addedProduct.quantity}
+      product_id = ${productId} quantity=${productQuantity}
     JOIN
       users u
     ON
@@ -18,18 +19,18 @@ const addCartList = async (addedProduct, userId) => {
 }
 
 const getCartList = async (userId) => {
-  const cartList = await prisma.$queryRaw`
+  const products = await prisma.$queryRaw`
     SELECT
-      c.user_id,
-      c.product_id,
-      c.quantity,
-      p.name,
-      d.image_url,
-      p.discounted_price,
-      p.price,
-      p.description,
-      ps.shipment_id,
-      s.shipment
+    s.id,
+    s.shipment,
+    c.product_id,
+    p.name,
+    d.image_url,
+    p.discounted_price,
+    p.price,
+    c.quantity,
+    p.storage,
+    p.description
     FROM
       users u
     JOIN
@@ -54,16 +55,16 @@ const getCartList = async (userId) => {
       p.id = d.product_id
     WHERE c.user_id = ${userId}
     `;
-  return cartList;
+  return products;
 };
 
-//장바구니 페이지에서 수량 변경시 업데이트
-const updateCartList = async (updatedCartList, userId) => {
+const updateCartList = async (updatedProduct, userId) => {
+  const { product_id, productQuantity } = updatedProduct;
   return await prisma.$queryRaw`
     UPDATE
       carts
     SET
-      quantity = ${updatedCartList.productQuantity}
+      quantity = ${productQuantity}
     JOIN
       users u
     ON
@@ -71,11 +72,10 @@ const updateCartList = async (updatedCartList, userId) => {
     WHERE
       u.id = ${userId}
     AND
-      p.id = ${updatedCartList.product_id}
+      p.id = ${product_id}
     `;
 }
 
-//장바구니 페이지에서 상품 선택하여 삭제시
 const deleteCartList =  async (product_id, userId) => {
   const cartList = await prisma.$queryRaw`
     UPDATE
@@ -107,4 +107,4 @@ const getProductAmount = async () => {
   return productAmount;
 }
 
-export default { addCartList, getCartList, updateCartList, deleteCartList };
+export default { addCartList, getCartList, updateCartList, deleteCartList, getProductAmount };

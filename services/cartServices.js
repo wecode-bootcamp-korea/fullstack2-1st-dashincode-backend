@@ -5,8 +5,8 @@ const addCartList = async (addedProduct, userId) => {
 }
 
 const getCartList= async (userId) => {
-  const cartList = await cartDao.getCartList(userId);
-  return cartList;
+  const products = await cartDao.getCartList(userId);
+  return products;
 };
 
 const updateCartList = async (updatedCartList, userId) => {
