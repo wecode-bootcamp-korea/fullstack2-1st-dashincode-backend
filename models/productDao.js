@@ -2,7 +2,7 @@ import prisma from '../prisma';
 
 
 
-const getProduct = async productId => {
+const getProductDetail = async productId => {
 
   const [product] = await prisma.$queryRaw`
   SELECT 
@@ -15,7 +15,7 @@ const getProduct = async productId => {
     p.sub_category_id,
     p.shipping_company,
     p.created_at,
-    p.clicked,
+    p.clicked
   FROM 
     products as p
   where 
@@ -34,4 +34,4 @@ const isProductImage = async productId => {
   return productImages;
 
 }
-export default { getProduct, isProductImage };
+export default { getProductDetail, isProductImage };

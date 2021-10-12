@@ -1,7 +1,7 @@
 const httpErrorStatus = {
     400: 'Bad request',
     401: 'Unauthorized',
-    402: 'payment require',
+    402: 'Payment Require',
     403: 'Forbidden',
     404: 'Not Found',
     408: 'Request Timeout',
