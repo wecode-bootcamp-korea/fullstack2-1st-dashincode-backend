@@ -14,8 +14,8 @@ const getNewestProductOfEachCategory = async () => {
   await prisma.$queryRaw`SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))`;
   const newestProductOfEachCategory = await prisma.$queryRaw`
     select
-      p.id, 
-      p.name, 
+      p.id,
+      p.name,
       p.main_category_id,
       i.image_url
     from(

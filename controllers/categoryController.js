@@ -2,13 +2,11 @@ import { categoryServices } from '../services';
 import { wrapAsync } from '../utils/wrapAsync';
 
 const getCategory = wrapAsync(async (req, res) => {
-  const location = req.params.location;
-  const category = await categoryServices.getCategory(location);
+  const category = await categoryServices.getCategory();
   res.status(200).json({
-    DATA: category,
+    message: 'SUCCESS',
+    category,
   });
 });
 
-export default {
-  getCategory,
-};
+export default { getCategory };
