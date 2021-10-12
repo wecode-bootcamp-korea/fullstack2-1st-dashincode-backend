@@ -7,7 +7,6 @@ const getCategory = async (email, password, nickname) => {
 
   if (!isUser) {
     const hash = await bcrypt.hash(password, 12);
-    console.log(hash);
     return await signupDao.getCategory(email, hash, nickname);
   }
 };
