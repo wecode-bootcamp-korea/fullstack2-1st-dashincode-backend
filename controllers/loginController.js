@@ -2,10 +2,10 @@ import { loginServices } from '../services';
 import { wrapAsync } from '../utils/wrapAsync';
 import { ERRORS } from '../utils/error';
 
-const getCategory = wrapAsync(async (req, res) => {
+const getUser = wrapAsync(async (req, res) => {
   const { email, password } = req.body;
   try {
-    const token = await loginServices.getCategory(email, password);
+    const token = await loginServices.getUser(email, password);
     if (!token) {
       res.status(401).send(ERRORS.WRONG_INPUT);
     } else {
@@ -23,4 +23,4 @@ const getCategory = wrapAsync(async (req, res) => {
   }
 });
 
-export default { getCategory };
+export default { getUser };

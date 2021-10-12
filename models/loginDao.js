@@ -1,9 +1,9 @@
 import prisma from '../prisma';
 
-const getCategory = async email => {
+const getUser = async email => {
   return await prisma.$queryRaw`
-  SELECT * FROM users WHERE email=${email};
+  SELECT email, password FROM users WHERE email=${email};
   `;
 };
 
-export default { getCategory };
+export default { getUser };
