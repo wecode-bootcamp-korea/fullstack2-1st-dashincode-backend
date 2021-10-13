@@ -7,8 +7,9 @@ const getLikedProduct = async (productId, userId) => {
         WHERE 
           product_id=${productId}
         AND
-          user_id=${userId})
-    `;
+          user_id=${userId}
+      )
+  `;
   return isLiked;
 };
 
