@@ -1,4 +1,3 @@
-import categoryServices from './categoryServices';
 import productServices from './productServices';
 import commentServices from './commentServices';
 import cartServices from './cartServices';
@@ -9,7 +8,6 @@ import searchServices from './searchServices';
 import listServices from './listServices';
 
 export {
-  categoryServices,
   productServices,
   commentServices,
   cartServices,

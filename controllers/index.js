@@ -1,4 +1,3 @@
-import categoryController from './categoryController';
 import productController from './productController';
 import commentController from './commentController';
 import cartController from './cartController';
@@ -9,7 +8,6 @@ import searchController from './searchController';
 import listController from './listController';
 
 export {
-  categoryController,
   productController,
   commentController,
   cartController,

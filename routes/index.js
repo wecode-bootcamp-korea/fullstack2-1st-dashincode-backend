@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-import categoryRouter from './categoryRouter';
 import productRouter from './productRouter';
 import likeRouter from './likeRouter';
 import commentRouter from './commentRouter';
@@ -11,7 +10,6 @@ import signupRouter from './signUpRouter';
 import searchRouter from './searchRouter';
 import listRouter from './listRouter';
 
-router.use('/category', categoryRouter);
 router.use('/product', productRouter);
 router.use('/like', likeRouter);
 router.use('/comment', commentRouter);

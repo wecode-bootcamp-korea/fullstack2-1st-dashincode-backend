@@ -1,4 +1,3 @@
-import categoryDao from './categoryDao';
 import productDao from './productDao';
 import commentDao from './commentDao';
 import cartDao from './cartDao';
@@ -9,7 +8,6 @@ import searchDao from './searchDao';
 import listDao from './listDao';
 
 export {
-  categoryDao,
   productDao,
   commentDao,
   cartDao,
