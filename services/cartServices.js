@@ -1,21 +1,35 @@
 import { cartDao } from '../models';
 
 const addCartList = async (addedProduct, userId) => {
-  return await cartDao.addCartList(addedProduct, userId);
+  const isExistingProduct = cartDao.checkCartList(addedProduct, userId);
+  if(isExistingProduct) {
+    await cartDao.updateCartList(addedProduct, userId)
+  } else {
+    await cartDao.addCartList(addedProduct, userId)
+  }
 }
 
 const getCartList= async (userId) => {
   const products = await cartDao.getCartList(userId);
+  if (!products.length) {
+    const err = new Error("PRODUCTS_NOT_FOUND");
+    err.statusCode = 404;
+    throw err;
+  }
   return products;
 };
 
-const updateCartList = async (updatedCartList, userId) => {
-  return await cartDao.updateartList(updatedCartList, userId);
+const updateCartList = async (updatedProduct, userId) => {
+  return await cartDao.updateCartList(updatedProduct, userId);
 }
 
-const deleteCartList = async (product_id, userId) => {
-  return await cartDao.deletecartList(product_id, userId);
+const deleteCartList = async (cartId, productId) => {
+  return await cartDao.deletecartList(cartId, productId);
 }
 
-export default { addCartList, getCartList, updateCartList, deleteCartList };
+const getProductAmountInCart = async (userId) => {
+  return await cartDao.getProductAmountInCart(userId);
+}
+
+export default { addCartList, getCartList, updateCartList, deleteCartList, getProductAmountInCart };
 

@@ -5,8 +5,9 @@ const router = express.Router();
 
 router.post('/', cartController.addCartList);
 router.get('/', cartController.getCartList);
-router.put('/:id', cartController.updateCartList);
+router.put('/', cartController.updateCartList);
 router.delete('/:id', cartController.deleteCartList);
+router.get('/', cartController.getProductAmountInCart);
 
 export default router;
 

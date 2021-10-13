@@ -4,11 +4,9 @@ const addCartList = async (addedProduct, userId) => {
   const { productId, productQuantity } = addedProduct;
   return await prisma.$queryRaw`
     INSERT INTO
-      carts
+      carts (product_id, quantity)
     VALUES
-      (product_id, quantity, user_id)
-    ON DUPLICATE KEY UPDATE
-      product_id = ${productId} quantity=${productQuantity}
+      (${productId}, ${productQuantity})
     JOIN
       users u
     ON
@@ -18,19 +16,35 @@ const addCartList = async (addedProduct, userId) => {
     `;
 }
 
+const checkCartList = async (addedProduct, userId) => {
+  const { productId } = addedProduct;
+  const [existingProduct] = await prisma.$queryRaw`
+    SELECT
+      c.user_id,
+      c.product_id
+    FROM
+      carts c
+    WHERE
+      c.user_id = ${userId}
+    AND
+      c.product_id = ${productId}
+    `
+  return existingProduct;
+}
+
 const getCartList = async (userId) => {
   const products = await prisma.$queryRaw`
     SELECT
-    s.id,
-    s.shipment,
-    c.product_id,
-    p.name,
-    d.image_url,
-    p.discounted_price,
-    p.price,
-    c.quantity,
-    p.storage,
-    p.description
+      s.id,
+      s.shipment,
+      c.product_id,
+      p.name,
+      d.image_url,
+      p.discounted_price,
+      p.price,
+      c.quantity,
+      p.storage,
+      p.description
     FROM
       users u
     JOIN
@@ -53,13 +67,14 @@ const getCartList = async (userId) => {
       description_images d
     ON
       p.id = d.product_id
-    WHERE c.user_id = ${userId}
+    WHERE
+      c.user_id = ${userId}
     `;
   return products;
 };
 
 const updateCartList = async (updatedProduct, userId) => {
-  const { product_id, productQuantity } = updatedProduct;
+  const { productId, productQuantity } = updatedProduct;
   return await prisma.$queryRaw`
     UPDATE
       carts
@@ -72,31 +87,24 @@ const updateCartList = async (updatedProduct, userId) => {
     WHERE
       u.id = ${userId}
     AND
-      p.id = ${product_id}
+      p.id = ${productId}
     `;
 }
 
-const deleteCartList =  async (product_id, userId) => {
+const deleteCartList =  async (cartId, productId) => {
   const cartList = await prisma.$queryRaw`
-    UPDATE
-      carts
-    SET
-      c.deleted_at = now(),
-      c.is_deleted = true
-    JOIN
-      users u
-    ON
-      c.user_id = u.id
+    DELETE FROM
+      carts c
     WHERE
-      c.product_id = ${product_id}
+      c.id = ${cartId}
     AND
-      u.id = ${userId}
+      c.product_id = ${productId}
   `;
   return cartList;
 }
 
-const getProductAmount = async () => {
-  const productAmount = await prisma.$queryRaw`
+const getProductAmountInCart = async (userId) => {
+  const productAmountInCart = await prisma.$queryRaw`
     SELECT COUNT
       c.product_id
     FROM
@@ -104,7 +112,7 @@ const getProductAmount = async () => {
     WHERE
       c.user_id = ${userId}
     `;
-  return productAmount;
+  return productAmountInCart;
 }
 
-export default { addCartList, getCartList, updateCartList, deleteCartList, getProductAmount };
+export default { addCartList, checkCartList, getCartList, updateCartList, deleteCartList, getProductAmountInCart };
