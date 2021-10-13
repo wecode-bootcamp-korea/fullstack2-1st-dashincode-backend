@@ -12,16 +12,29 @@ const getProductShipment = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const productShipment = await productServices.getProductShipment(id);
 
-  res.json(productShipment)
+  res.json(productShipment);
 });
 
-const getProductImage = wrapAsync(async (req, res) => {
+const getProductThumbNail = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const productImage = await productServices.getProductImage(id);
+  const ProductThumbnail = await productServices.getProductThumbNail(id);
 
-  res.json(productImage)
+  res.json(ProductThumbnail);
 })
 
+const getProductDescriptionImage = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  const productImage = await productServices.getProductDescriptionImage(id);
+
+  res.json(productImage);
+})
+
+const getProductNavBar = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  const productNavBar = await productServices.getProductNavBar(id);
+
+  res.json(productNavBar);
+})
 
 const getCategory = wrapAsync(async (req, res) => {
   const { location } = req.query;
@@ -31,4 +44,4 @@ const getCategory = wrapAsync(async (req, res) => {
   });
 });
 
-export default { getProductDetail , getProductShipment, getProductImage, getCategory };
+export default { getProductDetail , getProductShipment, getProductThumbNail, getProductDescriptionImage, getProductNavBar, getCategory };

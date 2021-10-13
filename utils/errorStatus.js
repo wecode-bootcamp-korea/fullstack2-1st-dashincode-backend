@@ -1,5 +1,5 @@
 const httpErrorStatus = {
-    400: 'Bad request',
+    400: 'Bad Request',
     401: 'Unauthorized',
     402: 'Payment Require',
     403: 'Forbidden',

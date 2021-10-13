@@ -10,10 +10,8 @@ const getProductDetail = async productId => {
     p.discounted_price,
     p.description,
     p.storage,
-    p.sub_category_id,
     p.shipping_company,
-    p.created_at,
-    p.clicked
+    p.created_at
   FROM 
     products as p
   where 
@@ -22,8 +20,8 @@ const getProductDetail = async productId => {
   return product;
 }
 
-const getProductImage = async productId => {
-  const productImage = await prisma.$queryRaw`
+const getProductDescriptionImage = async productId => {
+  const descriptionImage = await prisma.$queryRaw`
   SELECT 
     d.id,
     d.image_url,
@@ -33,14 +31,49 @@ const getProductImage = async productId => {
   WHERE 
     product_id = ${productId};`;
   
-  return productImage;
+  return descriptionImage;
+}
+
+const getProductThumbNail = async productId => {
+  const productThumbNail = await prisma.$queryRaw`
+  SELECT
+    t.id,
+    t.image_url,
+    t.is_main
+  FROM
+    products_thumbnails as t
+  WHERE
+    product_id = ${productId};`;
+
+  return productThumbNail;
+}
+
+const getProductNavBar = async productId => {
+  const ProductNavBar = await prisma.$queryRaw`
+  SELECT
+    main_categories.name,
+    sub_categories.name
+  FROM
+    products 
+  JOIN  
+    main_categories
+  ON 
+    main_categories.id = products.id
+  JOIN
+    sub_categories
+  ON
+    sub_categories.id = product.id
+  WHERE
+    product_id = ${productId};`;
+  
+  return ProductNavBar;
 }
 
 const getProductShipment = async productId => {
   const productShipment = await prisma.$queryRaw`
   SELECT
     ps.id,
-    ps.product_id,
+    ps.product_id
   FROM
     products_shipments as ps
   WHERE
@@ -73,12 +106,12 @@ const getProductShipment = async productId => {
 
   const getNewestProductOfEachCategory = async mainCategoryId => {
     return await prisma.$queryRaw`
-      select
+      SELECT
         p.id,
         p.name,
         p.main_category_id,
         i.image_url
-      from
+      FROM
         products p
       JOIN
         products_thumbnails i
@@ -93,7 +126,9 @@ const getProductShipment = async productId => {
 
 export default { 
   getProductDetail, 
-  getProductImage, 
+  getProductDescriptionImage, 
+  getProductThumbNail,
+  getProductNavBar,
   getProductShipment, 
   getMainCategory,
   getSubCategory,
