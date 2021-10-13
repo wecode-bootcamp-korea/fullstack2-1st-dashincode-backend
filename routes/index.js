@@ -1,10 +1,5 @@
 import express from 'express';
 const router = express.Router();
-<<<<<<< HEAD
-import categoryRouter from './categoryRouter';
-=======
-
->>>>>>> main
 import productRouter from './productRouter';
 import likeRouter from './likeRouter';
 import commentRouter from './commentRouter';
