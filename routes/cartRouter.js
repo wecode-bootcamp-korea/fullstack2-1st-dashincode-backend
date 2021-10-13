@@ -3,6 +3,11 @@ import { cartController } from '../controllers';
 
 const router = express.Router();
 
-router.get('/', cartController.getCategory);
+router.post('/', cartController.addCartList);
+router.get('/', cartController.getCartList);
+router.put('/', cartController.updateCartList);
+router.delete('/:id', cartController.deleteCartList);
+router.get('/amount', cartController.getProductAmountInCart);
 
 export default router;
+
