@@ -3,11 +3,14 @@ import prisma from '../prisma';
 const getLikedProduct = async (productId, userId) => {
   const [isLiked] = await prisma.$queryRaw`
     SELECT EXISTS
-      (SELECT * FROM likes 
-        WHERE 
-          product_id=${productId}
-        AND
-          user_id=${userId}
+      (SELECT
+        product_id, user_id 
+      FROM 
+        likes 
+      WHERE 
+        product_id=${productId}
+      AND
+        user_id=${userId}
       )
   `;
   return isLiked;
@@ -37,9 +40,12 @@ const deleteLike = async (productId, userId) => {
 const isProduct = async productId => {
   const [isProduct] = await prisma.$queryRaw`
     SELECT EXISTS
-      (SELECT * FROM products 
-        WHERE 
-          product_id=${productId}
+      (SELECT
+        id
+      FROM 
+        products 
+      WHERE 
+        id=${productId}
       )
   `;
   return isProduct;

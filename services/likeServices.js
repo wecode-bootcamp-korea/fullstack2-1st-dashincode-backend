@@ -1,22 +1,18 @@
 import { likeDao } from '../models';
 
 const getLikedProduct = async (productId, userId) => {
-  if (!productId) {
-    const err = new Error('PRODUCT_NOT_EXIST');
-    err.status = 401;
-    throw err;
-  }
   return await likeDao.getLikedProduct(productId, userId);
 };
 
 const likeProduct = async (productId, userId) => {
-  if (!productId) {
-    const err = new Error('PRODUCT_NOT_EXIST');
-    err.status = 401;
-    throw err;
-  }
   const isLiked = await likeDao.getLikedProduct(productId, userId);
   if (!isLiked) {
+    const isProduct = await likeDao.isProduct(productId);
+    if (!isProduct) {
+      const err = new Error('PRODUCT_NOT_EXIST');
+      err.status = 401;
+      throw err;
+    }
     await likeDao.addLike(productId, userId);
     return true;
   } else {
