@@ -1,12 +1,22 @@
 import { likeServices } from '../services';
-import { wrapAsync } from '../utils/wrapAsync'
+import { wrapAsync } from '../utils/wrapAsync';
 
-const getCategory = wrapAsync(async (req, res) => {
-  const category = await likeServices.getCategory();
+const getLikedProduct = wrapAsync(async (req, res) => {
+  const productId = req.params.productId;
+  const userId = req.user.id;
+  const isLiked = await likeServices.getLikedProduct(productId, userId);
   res.status(200).json({
-    message: 'SUCCESS',
-    category,
+    DATA: isLiked,
   });
 });
 
-export default { getCategory };
+const likeProduct = wrapAsync(async (req, res) => {
+  const productId = req.params.productId;
+  const userId = req.user.id;
+  const isLiked = await likeServices.likeProduct(productId, userId);
+  res.status(200).json({
+    DATA: isLiked,
+  });
+});
+
+export default { getLikedProduct, likeProduct };
