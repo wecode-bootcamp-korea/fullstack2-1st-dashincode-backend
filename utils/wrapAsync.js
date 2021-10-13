@@ -4,4 +4,4 @@ const wrapAsync = fn => {
   };
 };
 
-export { wrapAsync };
+export { wrapAsync } ;
