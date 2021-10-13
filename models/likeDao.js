@@ -34,4 +34,15 @@ const deleteLike = async (productId, userId) => {
   `;
 };
 
-export default { getLikedProduct, addLike, deleteLike };
+const isProduct = async productId => {
+  const [isProduct] = await prisma.$queryRaw`
+    SELECT EXISTS
+      (SELECT * FROM products 
+        WHERE 
+          product_id=${productId}
+      )
+  `;
+  return isProduct;
+};
+
+export default { getLikedProduct, addLike, deleteLike, isProduct };
