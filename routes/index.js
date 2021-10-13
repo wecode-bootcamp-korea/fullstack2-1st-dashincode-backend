@@ -1,6 +1,5 @@
 import express from 'express';
 const router = express.Router();
-
 import productRouter from './productRouter';
 import likeRouter from './likeRouter';
 import commentRouter from './commentRouter';
