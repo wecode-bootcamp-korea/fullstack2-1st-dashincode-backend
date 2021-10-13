@@ -4,7 +4,7 @@ import { ERRORS } from '../utils/error';
 
 const getUser = wrapAsync(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.user.id);
+
   try {
     const token = await userServices.getUser(email, password);
     if (!token) {
