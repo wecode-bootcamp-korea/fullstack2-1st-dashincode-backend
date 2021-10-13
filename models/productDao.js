@@ -1,6 +1,5 @@
 import prisma from '../prisma';
 
-
 const getProductDetail = async productId => {
   const [product] = await prisma.$queryRaw`
   SELECT 
@@ -18,7 +17,7 @@ const getProductDetail = async productId => {
     p.id=${productId};`;
 
   return product;
-}
+};
 
 const getProductDescriptionImage = async productId => {
   const descriptionImage = await prisma.$queryRaw`
@@ -30,9 +29,9 @@ const getProductDescriptionImage = async productId => {
     description_images as d
   WHERE 
     product_id = ${productId};`;
-  
+
   return descriptionImage;
-}
+};
 
 const getProductThumbNail = async productId => {
   const productThumbNail = await prisma.$queryRaw`
@@ -46,13 +45,13 @@ const getProductThumbNail = async productId => {
     product_id = ${productId};`;
 
   return productThumbNail;
-}
+};
 
 const getProductNavBar = async productId => {
-  const ProductNavBar = await prisma.$queryRaw`
+  const [ProductNavBar] = await prisma.$queryRaw`
   SELECT
-    main_categories.name,
-    sub_categories.name
+    main_categories.name AS mainCategoryName,
+    sub_categories.name AS subCategoryName
   FROM
     products 
   JOIN  
@@ -62,28 +61,32 @@ const getProductNavBar = async productId => {
   JOIN
     sub_categories
   ON
-    sub_categories.id = product.id
+    sub_categories.id = products.id
   WHERE
-    product_id = ${productId};`;
-  
+    products.id = ${productId};
+  `;
+
   return ProductNavBar;
-}
+};
 
 const getProductShipment = async productId => {
   const productShipment = await prisma.$queryRaw`
   SELECT
-    ps.id,
-    ps.product_id
+    s.shipment
   FROM
     products_shipments as ps
+  JOIN
+    shipments s
+  ON
+    s.id = ps.shipment_id
   WHERE
-    product_id = ${productId};`;
+    ps.product_id = ${productId};`;
 
   return productShipment;
-  }
+};
 
-  const getMainCategory = async () => {
-    return await prisma.$queryRaw`
+const getMainCategory = async () => {
+  return await prisma.$queryRaw`
       SELECT
         id, name
       FROM
@@ -91,10 +94,10 @@ const getProductShipment = async productId => {
       ORDER BY
         id
     `;
-  };
+};
 
-  const getSubCategory = async mainCategoryId => {
-    return await prisma.$queryRaw`
+const getSubCategory = async mainCategoryId => {
+  return await prisma.$queryRaw`
       SELECT
         id, name
       FROM
@@ -102,10 +105,10 @@ const getProductShipment = async productId => {
       WHERE
         main_category_id = ${mainCategoryId};
     `;
-  };
+};
 
-  const getNewestProductOfEachCategory = async mainCategoryId => {
-    return await prisma.$queryRaw`
+const getNewestProductOfEachCategory = async mainCategoryId => {
+  return await prisma.$queryRaw`
       SELECT
         p.id,
         p.name,
@@ -122,15 +125,56 @@ const getProductShipment = async productId => {
       ORDER BY
         updated_at DESC LIMIT 1
     `;
-  };
+};
 
-export default { 
-  getProductDetail, 
-  getProductDescriptionImage, 
+const getSpecialProduct = async () => {
+  const [specialProduct] = await prisma.$queryRaw`
+      SELECT
+        p.id,
+        p.name,
+        p.description,
+        p.price,
+        p.discounted_price,
+        i.image_url,
+        DATE_FORMAT(DATE_ADD(p.created_at, INTERVAL 10 DAY), '%m/%d/%Y') AS expire_date
+      FROM
+        products p
+      JOIN
+        products_thumbnails i
+      ON
+        i.product_id = p.id
+      ORDER BY
+        updated_at DESC LIMIT 1
+    `;
+  return specialProduct;
+};
+
+const getShipmentsOfProduct = async productId => {
+  return await prisma.$queryRaw`
+    SELECT 
+      s.shipment
+    FROM 
+      shipments s
+    JOIN 
+      products_shipments p
+    ON 
+      p.product_id = ${productId}
+    WHERE 
+      s.id = p.shipment_id
+    ORDER BY 
+      s.id
+  `;
+};
+
+export default {
+  getProductDetail,
+  getProductDescriptionImage,
   getProductThumbNail,
   getProductNavBar,
-  getProductShipment, 
+  getProductShipment,
   getMainCategory,
   getSubCategory,
-  getNewestProductOfEachCategory, 
+  getNewestProductOfEachCategory,
+  getSpecialProduct,
+  getShipmentsOfProduct,
 };
