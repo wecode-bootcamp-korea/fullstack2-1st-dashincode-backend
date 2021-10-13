@@ -19,7 +19,6 @@ const getCategorizedProducts = wrapAsync(async (req, res) => {
 
 const searchProducts = wrapAsync(async (req, res) => {
   // const value = decodeURIComponent(req.query.value); 프론트 한글 encode 이후 적용
-  console.log(req.query.value);
   const { value } = req.query;
   const products = await listServices.searchProducts(value);
   res.status(200).json({

@@ -43,7 +43,7 @@ const getProductsBySort = async sort => {
     ORDER BY p.id DESC LIMIT 30`,
     cooldelivery: Prisma.sql`WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 3) = 1
     ORDER BY p.id DESC LIMIT 30`,
-    mainpage: Prisma.sql`WHERE (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) = 0
+    mainpage: Prisma.sql`WHERE (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) > 0
     ORDER BY p.id DESC LIMIT 30`,
   };
 
