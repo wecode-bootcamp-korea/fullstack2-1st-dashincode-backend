@@ -1,19 +1,21 @@
 import { loginServices } from '../services';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import { ERRORS } from '../utils/error';
+
+dotenv.config();
+const { secret } = process.env;
 
 export const authMiddleware = () => {
   return async (req, res, next) => {
     const { user } = req.cookies;
-
     if (user) {
-      console.log(user);
       try {
-        const userId = await loginServices.verifyToken(user);
-        console.log(userId);
+        const userId = await verifyToken(user);
         if (userId) {
-          const isUser = await loginServices.getUser(userId.id);
+          const [isUser] = await loginServices.getUserById(userId.id);
           if (isUser) {
-            return (req.user = user);
+            req.user = isUser;
           }
         }
       } catch {
@@ -22,4 +24,16 @@ export const authMiddleware = () => {
     }
     next();
   };
+};
+
+const verifyToken = token => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, value) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(value);
+      }
+    });
+  });
 };

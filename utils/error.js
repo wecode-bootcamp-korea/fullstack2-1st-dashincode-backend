@@ -3,5 +3,6 @@ export const ERRORS = {
   WRONG_INPUT: '이메일 또는 비밀번호가 틀립니다. 다시 입력해주세요.',
   NO_USERS: '유저를 불러올 수 없습니다. 다시 시도해주세요.',
   NO_ITEMS: '해당 값을 찾을 수 없습니다. 다시 시도해주세요.',
+  NO_LOGIN: '로그인을 할 수 없습니다. 다시 시도해주세요.',
   INVALID_TOKEN: '토큰이 맞지 않습니다',
 };
