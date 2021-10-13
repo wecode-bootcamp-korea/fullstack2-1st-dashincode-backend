@@ -3,6 +3,7 @@ import { likeController } from '../controllers';
 
 const router = express.Router();
 
-router.get('/', likeController.getCategory);
+router.get('/:productId', likeController.getLikedProduct);
+router.post('/:productId', likeController.likeProduct);
 
 export default router;
