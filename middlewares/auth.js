@@ -8,7 +8,8 @@ const { secret } = process.env;
 
 export const authMiddleware = () => {
   return async (req, res, next) => {
-    const { user } = req.cookies;
+    const user = req.headers.cookie ? req.headers.cookie.split('=')[1] : '';
+
     if (user) {
       try {
         const userId = await verifyToken(user);
@@ -17,9 +18,13 @@ export const authMiddleware = () => {
           if (isUser) {
             req.user = isUser;
           }
+        } else {
+          res
+            .status(401)
+            .json({ response: false, error: ERRORS.INVALID_TOKEN });
         }
-      } catch {
-        res.status(401).json({ response: false, error: ERRORS.INVALID_TOKEN });
+      } catch (err) {
+        throw err;
       }
     }
     next();

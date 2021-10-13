@@ -8,7 +8,10 @@ const getUser = wrapAsync(async (req, res) => {
   try {
     const token = await userServices.getUser(email, password);
     if (!token) {
-      res.status(401).send(ERRORS.WRONG_INPUT);
+      res.status(401).json({
+        status: 'fail',
+        message: ERRORS.WRONG_INPUT,
+      });
     } else {
       res.cookie('user', token, {
         httpOnly: true,
@@ -19,21 +22,21 @@ const getUser = wrapAsync(async (req, res) => {
         token,
       });
     }
-  } catch (error) {
-    res.status(500).send(ERRORS.WRONG_INPUT);
+  } catch (err) {
+    throw err;
   }
 });
 
 const insertUser = wrapAsync(async (req, res) => {
   try {
     const signupInfo = req.body;
-    const signupUser = await userServices.insertUser(signupInfo);
+    await userServices.insertUser(signupInfo);
     res.status(201).json({
       message: 'CREATED',
-      signupUser,
+      user: signupInfo.email,
     });
   } catch (err) {
-    res.status(500).send('다른 이메일을 입력해주세요.');
+    throw err;
   }
 });
 
