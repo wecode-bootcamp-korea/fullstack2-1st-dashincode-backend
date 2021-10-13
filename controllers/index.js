@@ -2,8 +2,7 @@ import productController from './productController';
 import commentController from './commentController';
 import cartController from './cartController';
 import likeController from './likeController';
-import loginController from './loginController';
-import signupController from './signupController';
+import userController from './userController';
 import listController from './listController';
 
 export {
@@ -11,7 +10,6 @@ export {
   commentController,
   cartController,
   likeController,
-  loginController,
-  signupController,
+  userController,
   listController,
 };
