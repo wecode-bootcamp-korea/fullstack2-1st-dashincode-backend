@@ -1,22 +1,18 @@
 import express from 'express';
-const router = express.Router();
-
 import productRouter from './productRouter';
 import likeRouter from './likeRouter';
+import userRouter from './userRouter';
 import commentRouter from './commentRouter';
 import cartRouter from './cartRouter';
-import loginRouter from './loginRouter';
-import signupRouter from './signUpRouter';
-import searchRouter from './searchRouter';
 import listRouter from './listRouter';
+
+const router = express.Router();
 
 router.use('/product', productRouter);
 router.use('/like', likeRouter);
 router.use('/comment', commentRouter);
 router.use('/cart', cartRouter);
-router.use('/login', loginRouter);
-router.use('/signup', signupRouter);
-router.use('/search', searchRouter);
+router.use('/user', userRouter);
 router.use('/list', listRouter);
 
 export default router;

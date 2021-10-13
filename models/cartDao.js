@@ -5,7 +5,6 @@ const getCategory = async () => {
   SELECT c.id, c.name FROM categories c
   `;
   return category;
-  console.log(1);
 };
 
 export default { getCategory };

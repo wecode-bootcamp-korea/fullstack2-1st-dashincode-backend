@@ -2,9 +2,7 @@ import productServices from './productServices';
 import commentServices from './commentServices';
 import cartServices from './cartServices';
 import likeServices from './likeServices';
-import loginServices from './loginServices';
-import signupServices from './signupServices';
-import searchServices from './searchServices';
+import userServices from './userServices';
 import listServices from './listServices';
 
 export {
@@ -12,8 +10,6 @@ export {
   commentServices,
   cartServices,
   likeServices,
-  loginServices,
-  signupServices,
-  searchServices,
+  userServices,
   listServices,
 };
