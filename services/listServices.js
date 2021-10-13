@@ -1,34 +1,31 @@
 import { listDao } from '../models';
 
-const getProductsForEachCategory = async (depth, id) => {
-  if (depth === 'main') {
-    return await listDao.getProductsForMainCategory(id);
-  } else if (depth === 'sub') {
-    return await listDao.getProductsForSubCategory(id);
+const getShipments = async products => {
+  for (const product of products) {
+    const shipments = await listDao.getShipmentsOfProduct(product.id);
+    for (let i = 0; i < shipments.length; i++) {
+      shipments[i] = shipments[i].shipment;
+    }
+    product.shipment = shipments;
   }
+};
+
+const getProductsForEachCategory = async (depth, id) => {
+  const products = await listDao.getProductsByCategoryId(depth, id);
+  await getShipments(products);
+  return products;
 };
 
 const getCategorizedProducts = async sort => {
-  if (sort === 'best') {
-    return await listDao.getBestProducts();
-  } else if (sort === 'new') {
-    return await listDao.getNewProducts();
-  } else if (sort === 'dashindelivery') {
-    return await listDao.getDashinDeliveryProducts();
-  } else if (sort === 'cooldelivery') {
-    return await listDao.getCoolDeliveryProducts();
-  } else if (sort === 'mainpage') {
-    return await listDao.getMainPageProducts();
-  }
+  const products = await listDao.getProductsBySort(sort);
+  await getShipments(products);
+  return products;
 };
 
 const searchProducts = async value => {
-  const allProducts = await listDao.searchProducts();
-  const filteredProducts = allProducts.filter(
-    product =>
-      product.name.includes(value) || product.description.includes(value)
-  );
-  return filteredProducts;
+  const products = await listDao.getSearchedProducts(value);
+  await getShipments(products);
+  return products;
 };
 
 export default {
