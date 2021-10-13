@@ -50,7 +50,7 @@ const getProductShipment = async productId => {
   }
 
   const getMainCategory = async () => {
-    const a = await prisma.$queryRaw`
+    return await prisma.$queryRaw`
       SELECT
         id, name
       FROM
@@ -58,7 +58,6 @@ const getProductShipment = async productId => {
       ORDER BY
         id
     `;
-    console.log(a);
   };
 
   const getSubCategory = async mainCategoryId => {

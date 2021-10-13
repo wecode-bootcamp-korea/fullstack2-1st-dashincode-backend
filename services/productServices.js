@@ -24,18 +24,17 @@ const getProductShipment = async productId => {
 
 const getCategory = async location => {
   const mainCategory = await productDao.getMainCategory();
-  // for (const category of mainCategory) {
-  //   const subCategory = await productDao.getSubCategory(category.id);
-  //   category.list = subCategory;
-  // }
-
-  // if (location === 'slider') {
-  //   for (const category of mainCategory) {
-  //     const newestProductsOfMainCategory =
-  //       productDao.getNewestProductOfEachCategory(category.id);
-  //       category.product = newestProductsOfMainCategory;
-  //   }
-  // }
+  for (const category of mainCategory) {
+    const subCategory = await productDao.getSubCategory(category.id);
+    category.list = subCategory;
+  }
+  if (location === 'slider') {
+    for (const category of mainCategory) {
+      const newestProductsOfMainCategory =
+        await productDao.getNewestProductOfEachCategory(category.id);
+        category.product = newestProductsOfMainCategory;
+    }
+  }
   return mainCategory;
 };
 

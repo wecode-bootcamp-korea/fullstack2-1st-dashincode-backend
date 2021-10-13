@@ -25,7 +25,6 @@ const getProductImage = wrapAsync(async (req, res) => {
 
 const getCategory = wrapAsync(async (req, res) => {
   const { location } = req.query;
-  console.log(req.query);
   const category = await productServices.getCategory(location);
   res.status(200).json({
     DATA: category,
