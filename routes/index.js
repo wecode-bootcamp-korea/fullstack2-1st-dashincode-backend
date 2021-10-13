@@ -1,5 +1,4 @@
 import express from 'express';
-const router = express.Router();
 import productRouter from './productRouter';
 import likeRouter from './likeRouter';
 import userRouter from './userRouter';
@@ -7,6 +6,8 @@ import commentRouter from './commentRouter';
 import cartRouter from './cartRouter';
 
 import listRouter from './listRouter';
+
+const router = express.Router();
 
 router.use('/product', productRouter);
 router.use('/like', likeRouter);

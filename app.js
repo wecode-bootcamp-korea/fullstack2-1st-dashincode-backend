@@ -3,16 +3,14 @@ import router from './routes';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import { authMiddleware } from './middlewares/auth';
 
 dotenv.config();
 const app = express();
 
-app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.secret));
-app.use(authMiddleware());
+app.use(morgan('dev'));
+app.use(cookieParser());
 app.use('/', router);
 app.use((err, req, res, next) => {
   const { status, message } = err;
