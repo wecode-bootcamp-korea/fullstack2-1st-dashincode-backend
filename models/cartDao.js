@@ -104,7 +104,7 @@ const deleteCartList =  async (cartId, productId) => {
 }
 
 const getProductAmountInCart = async (userId) => {
-  const productAmountInCart = await prisma.$queryRaw`
+  const [productAmountInCart] = await prisma.$queryRaw`
     SELECT COUNT
       c.product_id
     FROM

@@ -7,7 +7,7 @@ const addCartList = wrapAsync(async (req, res) => {
   const addedProduct = {productId, productQuantity}
   const userId = req.user.id;
   if (!productId || !productQuantity) {
-    const err = new Error('NO_ADDED_PRODUCT');
+    const err = new Error('추가할 상품과 수량을 정확히 입력해주세요');
     err.status = 400;
     throw err;
   }
@@ -30,7 +30,7 @@ const updateCartList = wrapAsync(async (req, res) => {
   const updatedProduct = {productId, productQuantity}
   const userId = req.user.id;
   if (!productId || !productQuantity) {
-    const err = new Error('NO_UPDATED_PRODUCT');
+    const err = new Error('수정할 상품과 수량을 정확히 입력해주세요');
     err.status = 400;
     throw err;
   }
@@ -44,7 +44,7 @@ const deleteCartList = wrapAsync(async (req, res) => {
   const cartId = req.params.id;
   const productId = req.body;
   if (!productId) {
-    const err = new Error('NO_DELETED_PRODUCT');
+    const err = new Error('삭제할 상품을 정확히 입력해주세요');
     err.status = 400;
     throw err;
   }

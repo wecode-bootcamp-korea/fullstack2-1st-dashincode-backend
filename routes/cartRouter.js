@@ -7,7 +7,7 @@ router.post('/', cartController.addCartList);
 router.get('/', cartController.getCartList);
 router.put('/', cartController.updateCartList);
 router.delete('/:id', cartController.deleteCartList);
-router.get('/', cartController.getProductAmountInCart);
+router.get('/amount', cartController.getProductAmountInCart);
 
 export default router;
 
