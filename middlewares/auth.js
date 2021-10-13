@@ -1,4 +1,4 @@
-import { userServices } from '../services';
+import { loginServices } from '../services';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { ERRORS } from '../utils/error';
@@ -13,7 +13,7 @@ export const authMiddleware = () => {
       try {
         const userId = await verifyToken(user);
         if (userId) {
-          const [isUser] = await userServices.getUserById(userId.id);
+          const [isUser] = await loginServices.getUserById(userId.id);
           if (isUser) {
             req.user = isUser;
           }
