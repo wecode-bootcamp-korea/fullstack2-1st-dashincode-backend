@@ -6,22 +6,29 @@ import { ERRORS } from '../utils/error';
 dotenv.config();
 const { secret } = process.env;
 
-export const authMiddleware = async (req, res, next) => {
-  const { user } = req.cookies;
-  if (user) {
-    try {
-      const userId = await verifyToken(user);
-      if (userId) {
-        const [isUser] = await userServices.getUserById(userId.id);
-        if (isUser) {
-          req.user = isUser;
+export const authMiddleware = () => {
+  return async (req, res, next) => {
+    const user = req.headers.cookie ? req.headers.cookie.split('=')[1] : '';
+
+    if (user) {
+      try {
+        const userId = await verifyToken(user);
+        if (userId) {
+          const [isUser] = await userServices.getUserById(userId.id);
+          if (isUser) {
+            req.user = isUser;
+          }
+        } else {
+          res
+            .status(401)
+            .json({ response: false, error: ERRORS.INVALID_TOKEN });
         }
+      } catch (err) {
+        throw err;
       }
-    } catch {
-      res.status(401).json({ response: false, error: ERRORS.INVALID_TOKEN });
     }
-  }
-  next();
+    next();
+  };
 };
 
 const verifyToken = token => {
