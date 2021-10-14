@@ -14,7 +14,7 @@ const getUser = wrapAsync(async (req, res) => {
       });
     } else {
       res.cookie('user', token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: false,
       });
       return res.status(200).json({
