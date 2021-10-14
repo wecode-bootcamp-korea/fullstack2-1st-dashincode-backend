@@ -50,7 +50,7 @@ const getCartList = async (userId) => {
   SELECT
     c.product_id,
     p.name,
-    pt.image_url,
+    i.image_url,
     p.discounted_price,
     p.price,
     c.quantity,
