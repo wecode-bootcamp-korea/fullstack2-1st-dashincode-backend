@@ -23,10 +23,8 @@ const InsertData = fileName => {
       };
       try {
         csvData.push(data);
-        // sort.{name} 변경해주세요
         await prisma.$queryRaw`
-          ${sort.mainCategory}
-        `;
+          ${sort.comment}`;
       } catch (err) {
         console.log(err);
       }
@@ -37,19 +35,4 @@ const InsertData = fileName => {
     });
 };
 
-InsertData('productThumbnail');
-
-// fileName === 'mainCategory'
-//               ? sort.mainCategory
-//               : 'subCategory'
-//               ? sort.subCategory
-//               : 'shipment'
-//               ? sort.shipment
-//               : 'productShipment'
-//               ? sort.productShipment
-//               : 'productThumbnail'
-//               ? sort.productThumbnail
-//               : 'product'
-//               ? sort.product
-//               : 'comment'
-//               ? sort.comment
+InsertData('comment');

@@ -43,29 +43,8 @@ const getProductDescriptionImage = wrapAsync(async (req, res) => {
 // comment API Test
 const getProductCommentList = wrapAsync(async (req, res) => {
   const { id } = req.params;
-<<<<<<< HEAD
-  const productNavBar = await productServices.getProductNavBar(id);
-  console.log(productNavBar);
-  res.json(productNavBar);
-});
-
-const getCategory = wrapAsync(async (req, res) => {
-  const { location } = req.query;
-  const category = await productServices.getCategory(location);
-  res.status(200).json({
-    DATA: category,
-  });
-});
-
-const getSpecialProduct = wrapAsync(async (req, res) => {
-  const product = await productServices.getSpecialProduct();
-  res.status(200).json({
-    DATA: product,
-  });
-=======
   const commentList = await productServices.getProductCommentList(id);
   res.json(commentList);
->>>>>>> main
 });
 
 export default {
