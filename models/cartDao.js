@@ -57,9 +57,9 @@ const getCartList = async (userId) => {
     p.storage,
     p.description
     FROM
-    carts c
+    products p
     JOIN
-      products p
+      carts c
     ON
       c.product_id = p.id
     JOIN
