@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
 import { authMiddleware } from './middlewares/auth';
-import cors from 'cors';
 
 dotenv.config();
 const app = express();
