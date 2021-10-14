@@ -25,7 +25,7 @@ const getProductDescriptionImage = wrapAsync(async (req, res) => {
 const getProductNavBar = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const productNavBar = await productServices.getProductNavBar(id);
-
+  console.log(productNavBar);
   res.json(productNavBar);
 });
 
