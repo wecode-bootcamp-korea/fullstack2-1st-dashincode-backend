@@ -1,15 +1,13 @@
+import userServices from './userServices';
 import productServices from './productServices';
-import commentServices from './commentServices';
+import listServices from './listServices';
 import cartServices from './cartServices';
 import likeServices from './likeServices';
-import userServices from './userServices';
-import listServices from './listServices';
 
 export {
+  userServices,
   productServices,
-  commentServices,
+  listServices,
   cartServices,
   likeServices,
-  userServices,
-  listServices,
 };
