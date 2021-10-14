@@ -1,40 +1,36 @@
 import { productDao } from '../models';
-import { errorStatus } from '../utils'
+import { errorStatus } from '../utils';
 
 const getProductDetail = async productId => {
   const product = await productDao.getProductDetail(productId);
-  
-  if(!product) errorStatus(404, 'NO_EXIST_PRODUCT');
+  const productShipment = await productDao.getProductShipment(productId);
+  for (let i = 0; i < productShipment.length; i++) {
+    productShipment[i] = productShipment[i].shipment;
+  }
+  product.shipment = productShipment;
+
+  if (!product) errorStatus(404, 'NO_EXIST_PRODUCT');
   return product;
 };
 
 const getProductDescriptionImage = async productId => {
-  const descriptionImage = await productDao.getProductDescriptionImage(productId);
-  
-  if(!descriptionImage) errorStatus(404, 'NO_EXIST_PRODUCT_IMAGE');
+  const descriptionImage = await productDao.getProductDescriptionImage(
+    productId
+  );
+
+  if (!descriptionImage) errorStatus(404, 'NO_EXIST_PRODUCT_IMAGE');
   return descriptionImage;
-}
+};
 
 const getProductThumbNail = async productId => {
   const productThumbNail = await productDao.getProductThumbNail(productId);
-
-  if(!ThumbNail) errorStatus(404, 'NO_EXIST_PRODUCT_THUMBNAIL');
   return productThumbNail;
-}
+};
 
-const getProductShipment = async productId => {
-  const productShipment = await productDao.getProductShipment(productId);
-
-  if (!Shipment) errorStatus(404, 'NO_EXIST_PRODUCT_SHIPMENT');
-  return productShipment;
-}
-
-const getProductNavBar =async productId => {
+const getProductNavBar = async productId => {
   const productNavBar = await productDao.getProductNavBar(productId);
-
-  if(!NavBar) errorStatus(404, 'NO_EXIST_PRODUCT_NAVBAR');
   return productNavBar;
-}
+};
 
 const getCategory = async location => {
   const mainCategory = await productDao.getMainCategory();
@@ -46,10 +42,28 @@ const getCategory = async location => {
     for (const category of mainCategory) {
       const newestProductsOfMainCategory =
         await productDao.getNewestProductOfEachCategory(category.id);
-        category.product = newestProductsOfMainCategory;
+      category.product = newestProductsOfMainCategory;
     }
   }
   return mainCategory;
 };
 
-export default { getProductDetail, getProductDescriptionImage, getProductThumbNail, getProductShipment, getProductNavBar, getCategory };
+const getSpecialProduct = async () => {
+  const products = await productDao.getSpecialProduct();
+  const shipments = await productDao.getShipmentsOfProduct(products.id);
+  for (let i = 0; i < shipments.length; i++) {
+    shipments[i] = shipments[i].shipment;
+  }
+  products.shipment = shipments;
+
+  return products;
+};
+
+export default {
+  getProductDetail,
+  getSpecialProduct,
+  getProductDescriptionImage,
+  getProductThumbNail,
+  getProductNavBar,
+  getCategory,
+};

@@ -8,33 +8,26 @@ const getProductDetail = wrapAsync(async (req, res) => {
   res.json(productDetail);
 });
 
-const getProductShipment = wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const productShipment = await productServices.getProductShipment(id);
-
-  res.json(productShipment);
-});
-
 const getProductThumbNail = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const ProductThumbnail = await productServices.getProductThumbNail(id);
 
   res.json(ProductThumbnail);
-})
+});
 
 const getProductDescriptionImage = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const productImage = await productServices.getProductDescriptionImage(id);
 
   res.json(productImage);
-})
+});
 
 const getProductNavBar = wrapAsync(async (req, res) => {
   const { id } = req.params;
   const productNavBar = await productServices.getProductNavBar(id);
 
   res.json(productNavBar);
-})
+});
 
 const getCategory = wrapAsync(async (req, res) => {
   const { location } = req.query;
@@ -44,4 +37,18 @@ const getCategory = wrapAsync(async (req, res) => {
   });
 });
 
-export default { getProductDetail , getProductShipment, getProductThumbNail, getProductDescriptionImage, getProductNavBar, getCategory };
+const getSpecialProduct = wrapAsync(async (req, res) => {
+  const product = await productServices.getSpecialProduct();
+  res.status(200).json({
+    DATA: product,
+  });
+});
+
+export default {
+  getProductDetail,
+  getSpecialProduct,
+  getProductThumbNail,
+  getProductDescriptionImage,
+  getProductNavBar,
+  getCategory,
+};

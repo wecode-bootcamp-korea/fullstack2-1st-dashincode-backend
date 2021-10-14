@@ -3,12 +3,14 @@ import router from './routes';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cors from 'cors';
 import { authMiddleware } from './middlewares/auth';
 import cors from 'cors';
 
 dotenv.config();
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
