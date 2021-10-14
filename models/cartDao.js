@@ -58,15 +58,17 @@ const getCartList = async (userId) => {
     p.description
     FROM
     products p
-    JOIN
+  JOIN
       carts c
-    ON
+  ON
       c.product_id = p.id
-    JOIN
-      products_thumbnails pt
-    ON
-      p.id = pt.product_id
-    WHERE
+  JOIN
+      products_thumbnails i
+  ON
+      i.product_id = p.id
+  AND
+      i.is_main = 1
+  WHERE
       c.user_id = ${userId}
     `;
   return products;

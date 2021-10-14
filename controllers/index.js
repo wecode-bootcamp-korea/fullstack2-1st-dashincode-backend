@@ -1,15 +1,13 @@
+import userController from './userController';
 import productController from './productController';
-import commentController from './commentController';
+import listController from './listController';
 import cartController from './cartController';
 import likeController from './likeController';
-import userController from './userController';
-import listController from './listController';
 
 export {
+  userController,
   productController,
-  commentController,
+  listController,
   cartController,
   likeController,
-  userController,
-  listController,
 };
