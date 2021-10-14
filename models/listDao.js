@@ -25,6 +25,8 @@ const getProductsByCategoryId = async (depth, id) => {
       products_thumbnails i
     ON 
       i.product_id = p.id
+    AND
+      i.is_main = 1
     ${
       depth === 'main'
         ? condition.main
@@ -64,7 +66,9 @@ const getProductsBySort = async sort => {
     JOIN 
       products_thumbnails i
     ON 
-    i.product_id = p.id
+      i.product_id = p.id
+    AND
+      i.is_main = 1
     ${
       sort === 'best'
         ? condition.best
@@ -100,6 +104,8 @@ const getSearchedProducts = async value => {
       products_thumbnails i
     ON 
       i.product_id = p.id
+    AND
+      i.is_main = 1
     WHERE 
       p.name 
     LIKE 
