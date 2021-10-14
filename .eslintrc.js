@@ -8,8 +8,10 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['airbnb-base', 'plugin:node/recommended', 'prettier'],
+  extends: ['prettier'],
   rules: {
     'import/prefer-default-export': ['off'],
+    'no-console': 'off',
+    'no-nested-ternary': 'on',
   },
 };
