@@ -5,18 +5,16 @@ const { Prisma, PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const csvData = [];
-//fileName만 바꾸시면 테이블별로 데이터베이스에 입력됩니다.
-const fileName = 'mainCategory';
-const filePath = `dataUploader/csv/${fileName}.csv`;
 
-const InsertData = () => {
+const InsertData = fileName => {
+  const filePath = `dataUploader/csv/${fileName}.csv`;
   fs.createReadStream(filePath)
     .pipe(csv())
     .on('data', async data => {
       const sort = {
         mainCategory: Prisma.sql`INSERT INTO main_categories (id, name) VALUES (${data.id}, ${data.name})`,
         subCategory: Prisma.sql`INSERT INTO sub_categories (id, name, main_category_id) VALUES (${data.id}, ${data.name}, ${data.main_category_id})`,
-        shipment: Prisma.sql`INSERT INTO sub_categories (id, shipment) VALUES (${data.id}, ${data.shipment})`,
+        shipment: Prisma.sql`INSERT INTO shipments (id, shipment) VALUES (${data.id}, ${data.shipment})`,
         productShipment: Prisma.sql`INSERT INTO products_shipments (product_id, shipment_id) VALUES (${data.product_id}, ${data.shipment_id})`,
         productThumbnail: Prisma.sql`INSERT INTO products_thumbnails (image_url, is_main, product_id) VALUES (${data.image_url}, ${data.is_main}, ${data.product_id})`,
         product: Prisma.sql`INSERT INTO products (name, price, discounted_price, description, storage, clicked, shipping_company, main_category_id, sub_category_id) VALUES 
@@ -25,24 +23,9 @@ const InsertData = () => {
       };
       try {
         csvData.push(data);
+        // sort.{name} 변경해주세요
         await prisma.$queryRaw`
-          ${
-            fileName == 'mainCategory'
-              ? sort.mainCategory
-              : 'subCategory'
-              ? sort.subCategory
-              : 'shipment'
-              ? sort.shipment
-              : 'productShipment'
-              ? sort.productShipment
-              : 'productThumbnail'
-              ? sort.productThumbnail
-              : 'product'
-              ? sort.product
-              : 'comment'
-              ? sort.comment
-              : prisma.empty
-          }
+          ${sort.mainCategory}
         `;
       } catch (err) {
         console.log(err);
@@ -54,4 +37,19 @@ const InsertData = () => {
     });
 };
 
-InsertData();
+InsertData('productThumbnail');
+
+// fileName === 'mainCategory'
+//               ? sort.mainCategory
+//               : 'subCategory'
+//               ? sort.subCategory
+//               : 'shipment'
+//               ? sort.shipment
+//               : 'productShipment'
+//               ? sort.productShipment
+//               : 'productThumbnail'
+//               ? sort.productThumbnail
+//               : 'product'
+//               ? sort.product
+//               : 'comment'
+//               ? sort.comment
