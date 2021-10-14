@@ -87,11 +87,11 @@ const getProductNavBar = async productId => {
     JOIN
       main_categories
     ON
-      main_categories.id = products.id
+      main_categories.id = products.main_category_id
     JOIN
       sub_categories
     ON
-      sub_categories.id = products.id
+      sub_categories.id = products.sub_category_id
     WHERE
       products.id = ${productId};
   `;
