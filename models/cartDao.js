@@ -50,12 +50,13 @@ const getCartList = async (userId) => {
   SELECT
     c.product_id,
     p.name,
-    pt.image_url,
+    i.image_url,
     p.discounted_price,
     p.price,
     c.quantity,
     p.storage,
     p.description
+<<<<<<< HEAD
   FROM
       products p
   JOIN
@@ -70,6 +71,22 @@ const getCartList = async (userId) => {
     pt.is_main = 1
   WHERE
     c.user_id = ${userId}
+=======
+    FROM
+    products p
+  JOIN
+      carts c
+  ON
+      c.product_id = p.id
+  JOIN
+      products_thumbnails i
+  ON
+      i.product_id = p.id
+  AND
+      i.is_main = 1
+  WHERE
+      c.user_id = ${userId}
+>>>>>>> main
     `;
   return products;
 };
