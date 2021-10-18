@@ -24,7 +24,7 @@ const InsertData = fileName => {
       try {
         csvData.push(data);
         await prisma.$queryRaw`
-          ${sort.comment}`;
+          ${sort.productThumbnail}`;
       } catch (err) {
         console.log(err);
       }
@@ -35,4 +35,4 @@ const InsertData = fileName => {
     });
 };
 
-InsertData('comment');
+InsertData('productThumbnail');

@@ -15,10 +15,10 @@ const getLikedProduct = async (productId, userId) => {
 
 const addLike = async (productId, userId) => {
   return await prisma.$queryRaw`
-    INSERT INTO 
-      likes 
-      (product_id, user_id) 
-    VALUE 
+    INSERT INTO
+      likes
+      (product_id, user_id)
+    VALUES
       (${productId}, ${userId})
   `;
 };

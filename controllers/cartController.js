@@ -40,14 +40,13 @@ const updateCartList = wrapAsync(async (req, res) => {
 });
 
 const deleteCartList = wrapAsync(async (req, res) => {
-  const cartId = req.params.id;
-  const productId = req.body;
+  const productId = req.params.id;
   if (!productId) {
     const err = new Error('삭제할 상품을 정확히 입력해주세요');
     err.status = 400;
     throw err;
   }
-  await cartServices.deleteCartList(cartId, productId);
+  await cartServices.deleteCartList(productId);
   res.status(201).json({
     message: '장바구니에서 삭제되었습니다.',
   });
