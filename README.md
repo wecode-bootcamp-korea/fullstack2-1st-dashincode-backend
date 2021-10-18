@@ -37,7 +37,7 @@
 
 <br/>
 
-# DASINSHOP Frontend Repo
+# DASINCO Frontend Repo
 
 - https://github.com/wecode-bootcamp-korea/fullstack2-1st-dashincode-frontend
 
@@ -95,7 +95,7 @@
 
     - 검색된 상품 리스트 api
 
-      - 검색창에 입력된 단어가 포함된 상품 리스트 정보 조회 가능 및 쿼리 스트링을 사용해 필터링 구형
+      - 검색창에 입력된 단어가 포함된 상품 리스트 정보 조회 가능 및 쿼리 스트링을 사용해 필터링 구현
       - Query Parameters(value) - 검색창에 입력된 string이 한글이면 encodeURI()로 인코딩해 정보 전달
 
     - 필터링된 상품 리스트 API
