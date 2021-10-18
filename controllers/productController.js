@@ -16,22 +16,22 @@ const getSpecialProduct = wrapAsync(async (req, res) => {
   });
 });
 
-const getProductNavBar = wrapAsync(async (req, res) => {
+const getProductNav = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const productNavBar = await productServices.getProductNavBar(id);
-  res.json(productNavBar);
+  const productNav = await productServices.getProductNav(id);
+  res.json(productNav);
 });
 
-const getProductDetail = wrapAsync(async (req, res) => {
+const getProductInfo = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const productDetail = await productServices.getProductDetail(id);
-  res.json(productDetail);
+  const productInfo = await productServices.getProductInfo(id);
+  res.json(productInfo);
 });
 
-const getProductThumbNail = wrapAsync(async (req, res) => {
+const getProductThumbnails = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const productThumbnail = await productServices.getProductThumbNail(id);
-  res.json(productThumbnail);
+  const productThumbnails = await productServices.getProductThumbnails(id);
+  res.json(productThumbnails);
 });
 
 const getProductDescriptionImage = wrapAsync(async (req, res) => {
@@ -40,19 +40,18 @@ const getProductDescriptionImage = wrapAsync(async (req, res) => {
   res.json(productImage);
 });
 
-// comment API Test
-const getProductCommentList = wrapAsync(async (req, res) => {
+const getProductReviewList = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const commentList = await productServices.getProductCommentList(id);
-  res.json(commentList);
+  const reviewList = await productServices.getProductReviewList(id);
+  res.json(reviewList);
 });
 
 export default {
   getCategory,
   getSpecialProduct,
-  getProductNavBar,
-  getProductDetail,
-  getProductThumbNail,
+  getProductNav,
+  getProductInfo,
+  getProductThumbnails,
   getProductDescriptionImage,
-  getProductCommentList,
+  getProductReviewList,
 };
