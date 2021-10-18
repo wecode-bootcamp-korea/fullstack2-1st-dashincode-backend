@@ -2,10 +2,9 @@ import { Prisma } from '.prisma/client';
 import prisma from '../prisma';
 
 const getProductsByCategoryId = async (depth, id) => {
-  const condition = {
-    main: Prisma.sql`WHERE p.main_category_id=${id}`,
-    sub: Prisma.sql`WHERE p.sub_category_id=${id}`,
-  };
+  let query = '';
+  if (depth === 'main') query = Prisma.sql`WHERE p.main_category_id=${id}`;
+  if (depth === 'sub') query = Prisma.sql`WHERE p.sub_category_id=${id}`;
 
   return await prisma.$queryRaw`
     SELECT 
@@ -27,27 +26,23 @@ const getProductsByCategoryId = async (depth, id) => {
       i.product_id = p.id
     AND
       i.is_main = 1
-    ${
-      depth === 'main'
-        ? condition.main
-        : depth === 'sub'
-        ? condition.sub
-        : Prisma.empty
-    }
+    ${query}
   `;
 };
 
 const getProductsBySort = async sort => {
-  const condition = {
-    best: Prisma.sql`ORDER BY p.clicked DESC LIMIT 30`,
-    new: Prisma.sql`ORDER BY p.created_at DESC LIMIT 30`,
-    dashindelivery: Prisma.sql`WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 2) = 1
-    ORDER BY p.id DESC LIMIT 30`,
-    cooldelivery: Prisma.sql`WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 3) = 1
-    ORDER BY p.id DESC LIMIT 30`,
-    mainpage: Prisma.sql`WHERE (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) > 0
-    ORDER BY p.id DESC LIMIT 30`,
-  };
+  let query = '';
+  if (sort === 'best') query = Prisma.sql`ORDER BY p.clicked DESC LIMIT 30`;
+  if (sort === 'new') query = Prisma.sql`ORDER BY p.created_at DESC LIMIT 30`;
+  if (sort === 'dashindelivery')
+    query = Prisma.sql`WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 2) = 1
+    ORDER BY p.id DESC LIMIT 30`;
+  if (sort === 'cooldelivery')
+    query = Prisma.sql`WHERE (SELECT COUNT(*) FROM products_shipments s WHERE s.product_id=p.id AND s.shipment_id = 1) = 1
+    ORDER BY p.id DESC LIMIT 30`;
+  if (sort === 'mainpage')
+    query = Prisma.sql`WHERE (SELECT COUNT(product_id) FROM comments WHERE comments.product_id = p.id) > 0
+    ORDER BY p.id DESC LIMIT 30`;
 
   return await prisma.$queryRaw`
     SELECT 
@@ -69,19 +64,7 @@ const getProductsBySort = async sort => {
       i.product_id = p.id
     AND
       i.is_main = 1
-    ${
-      sort === 'best'
-        ? condition.best
-        : sort === 'new'
-        ? condition.new
-        : sort === 'dashindelivery'
-        ? condition.dashindelivery
-        : sort === 'cooldelivery'
-        ? condition.cooldelivery
-        : sort === 'mainpage'
-        ? condition.mainpage
-        : Prisma.empty
-    };
+    ${query}
   `;
 };
 
