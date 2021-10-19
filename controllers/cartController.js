@@ -54,7 +54,7 @@ const deleteCartList = wrapAsync(async (req, res) => {
 
 const getProductAmountInCart = wrapAsync(async (req, res) => {
   if (!req.user) {
-    res.status(201).json({
+    res.status(200).json({
       amount: 0,
     });
     return;
