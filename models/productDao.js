@@ -77,11 +77,11 @@ const getShipmentsOfProduct = async productId =>
       s.id
   `;
 
-const getProductNavBar = async productId => {
-  const [productNavBar] = await prisma.$queryRaw`
+const getProductNav = async productId => {
+  const [productNav] = await prisma.$queryRaw`
     SELECT
-      main_categories.name AS mainCategoryName,
-      sub_categories.name AS subCategoryName
+      main_categories.name AS mainCategory,
+      sub_categories.name AS subCategory
     FROM
       products
     JOIN
@@ -95,11 +95,11 @@ const getProductNavBar = async productId => {
     WHERE
       products.id = ${productId};
   `;
-  return productNavBar;
+  return productNav;
 };
 
-const getProductDetail = async productId => {
-  const [product] = await prisma.$queryRaw`
+const getProductInfo = async productId => {
+  const [productInfo] = await prisma.$queryRaw`
     SELECT
       p.id,
       p.name,
@@ -113,7 +113,7 @@ const getProductDetail = async productId => {
       products as p
     where
       p.id=${productId};`;
-  return product;
+  return productInfo;
 };
 
 const getProductShipment = async productId => {
@@ -127,12 +127,15 @@ const getProductShipment = async productId => {
     ON
       s.id = ps.shipment_id
     WHERE
-      ps.product_id = ${productId};`;
+      ps.product_id = ${productId}
+    ORDER BY
+      ps.shipment_id ASC
+  `;
   return productShipment;
 };
 
-const getProductThumbNail = async productId => {
-  const productThumbNail = await prisma.$queryRaw`
+const getProductThumbnails = async productId => {
+  const productThumbnails = await prisma.$queryRaw`
     SELECT
       t.id,
       t.image_url,
@@ -141,7 +144,7 @@ const getProductThumbNail = async productId => {
       products_thumbnails as t
     WHERE
       product_id = ${productId};`;
-  return productThumbNail;
+  return productThumbnails;
 };
 
 const getProductDescriptionImage = async productId => {
@@ -157,9 +160,8 @@ const getProductDescriptionImage = async productId => {
   return descriptionImage;
 };
 
-// comment API Test
-const getProductCommentList = async productId => {
-  const commentList = await prisma.$queryRaw`
+const getProductReviewList = async productId => {
+  const reviewList = await prisma.$queryRaw`
     SELECT
       c.product_id,
       c.user_id,
@@ -178,7 +180,7 @@ const getProductCommentList = async productId => {
     ORDER BY
       c.created_at DESC
   `;
-  return commentList;
+  return reviewList;
 };
 
 const getLikedProduct = async (productId, userId) => {
@@ -232,14 +234,15 @@ export default {
   getNewestProductOfEachCategory,
   getSpecialProduct,
   getShipmentsOfProduct,
-  getProductNavBar,
-  getProductDetail,
+  getProductNav,
+  getProductInfo,
   getProductShipment,
-  getProductThumbNail,
+  getProductThumbnails,
   getProductDescriptionImage,
   getProductCommentList,
   getLikedProduct,
   addLike,
   deleteLike,
   isProduct,
+  getProductReviewList,
 };

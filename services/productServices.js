@@ -27,25 +27,25 @@ const getSpecialProduct = async () => {
   return products;
 };
 
-const getProductNavBar = async productId => {
-  const productNavBar = await productDao.getProductNavBar(productId);
-  return productNavBar;
+const getProductNav = async productId => {
+  const productNav = await productDao.getProductNav(productId);
+  return productNav;
 };
 
-const getProductDetail = async productId => {
-  const product = await productDao.getProductDetail(productId);
+const getProductInfo = async productId => {
+  const productInfo = await productDao.getProductInfo(productId);
   const productShipment = await productDao.getProductShipment(productId);
   for (let i = 0; i < productShipment.length; i++) {
     productShipment[i] = productShipment[i].shipment;
   }
-  product.shipment = productShipment;
-  if (!product) errorStatus(404, 'NO_EXIST_PRODUCT');
-  return product;
+  productInfo.shipment = productShipment;
+  if (!productInfo) errorStatus(404, 'NO_EXIST_PRODUCT');
+  return productInfo;
 };
 
-const getProductThumbNail = async productId => {
-  const productThumbNail = await productDao.getProductThumbNail(productId);
-  return productThumbNail;
+const getProductThumbnails = async productId => {
+  const productThumbnails = await productDao.getProductThumbnails(productId);
+  return productThumbnails;
 };
 
 const getProductDescriptionImage = async productId => {
@@ -56,10 +56,9 @@ const getProductDescriptionImage = async productId => {
   return descriptionImage;
 };
 
-// comment API Test
-const getProductCommentList = async productId => {
-  const commentList = await productDao.getProductCommentList(productId);
-  return commentList;
+const getProductReviewList = async productId => {
+  const reviewList = await productDao.getProductReviewList(productId);
+  return reviewList;
 };
 
 //like API
@@ -92,12 +91,13 @@ const unlikeProduct = async (productId, userId) => {
 export default {
   getCategory,
   getSpecialProduct,
-  getProductNavBar,
-  getProductDetail,
-  getProductThumbNail,
+  getProductNav,
+  getProductInfo,
+  getProductThumbnails,
   getProductDescriptionImage,
   getProductCommentList,
   getLikedProduct,
   likeProduct,
   unlikeProduct,
+  getProductReviewList,
 };

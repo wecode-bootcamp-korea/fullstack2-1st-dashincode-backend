@@ -21,5 +21,6 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(status || 500).json({ message });
 });
+app.use(cors());
 
 export default app;
