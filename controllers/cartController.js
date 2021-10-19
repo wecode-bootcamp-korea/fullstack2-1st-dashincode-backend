@@ -34,28 +34,27 @@ const updateCartList = wrapAsync(async (req, res) => {
     throw err;
   }
   await cartServices.updateCartList(updatedProduct, userId);
-  res.status(201).json({
+  res.status(200).json({
     message: '장바구니가 수정되었습니다.',
   });
 });
 
 const deleteCartList = wrapAsync(async (req, res) => {
-  const cartId = req.params.id;
-  const productId = req.body;
+  const productId = req.params.id;
   if (!productId) {
     const err = new Error('삭제할 상품을 정확히 입력해주세요');
     err.status = 400;
     throw err;
   }
-  await cartServices.deleteCartList(cartId, productId);
-  res.status(201).json({
+  await cartServices.deleteCartList(productId);
+  res.status(200).json({
     message: '장바구니에서 삭제되었습니다.',
   });
 });
 
 const getProductAmountInCart = wrapAsync(async (req, res) => {
   if (!req.user) {
-    res.status(201).json({
+    res.status(200).json({
       amount: 0,
     });
     return;
@@ -64,7 +63,7 @@ const getProductAmountInCart = wrapAsync(async (req, res) => {
     const productAmountInCart = await cartServices.getProductAmountInCart(
       userId
     );
-    res.status(201).json({
+    res.status(200).json({
       amount: productAmountInCart,
     });
   }

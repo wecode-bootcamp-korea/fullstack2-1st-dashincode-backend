@@ -25,8 +25,8 @@ const updateCartList = async (updatedProduct, userId) => {
   return await cartDao.updateCartList(updatedProduct, userId);
 }
 
-const deleteCartList = async (cartId, productId) => {
-  return await cartDao.deleteCartList(cartId, productId);
+const deleteCartList = async (productId) => {
+  return await cartDao.deleteCartList(productId);
 }
 
 const getProductAmountInCart = async (userId) => {

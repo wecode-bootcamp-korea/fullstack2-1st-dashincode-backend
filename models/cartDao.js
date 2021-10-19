@@ -24,7 +24,6 @@ const checkCartList = async (addedProduct, userId) => {
     AND
       c.product_id = ${productId}
     `;
-    console.log(typeof existingProduct.count);
   return existingProduct.count;
 }
 
@@ -56,20 +55,20 @@ const getCartList = async (userId) => {
     c.quantity,
     p.storage,
     p.description
-    FROM
+  FROM
     products p
   JOIN
-      carts c
+    carts c
   ON
-      c.product_id = p.id
+    c.product_id = p.id
   JOIN
-      products_thumbnails i
+    products_thumbnails i
   ON
-      i.product_id = p.id
+    i.product_id = p.id
   AND
-      i.is_main = 1
+    i.is_main = 1
   WHERE
-      c.user_id = ${userId}
+    c.user_id = ${userId}
     `;
   return products;
 };
@@ -88,15 +87,15 @@ const updateCartList = async (updatedProduct, userId) => {
     `;
 }
 
-const deleteCartList =  async (cartId, productId) => {
+const deleteCartList = async productId => {
   const cartList = await prisma.$queryRaw`
     DELETE FROM
       carts c
     WHERE
-      c.id = ${cartId}
+      c.product_id = ${productId}
   `;
   return cartList;
-}
+};
 
 const getProductAmountInCart = async (userId) => {
   const [productAmountInCart] = await prisma.$queryRaw`
