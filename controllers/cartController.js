@@ -34,7 +34,7 @@ const updateCartList = wrapAsync(async (req, res) => {
     throw err;
   }
   await cartServices.updateCartList(updatedProduct, userId);
-  res.status(201).json({
+  res.status(200).json({
     message: '장바구니가 수정되었습니다.',
   });
 });
@@ -47,7 +47,7 @@ const deleteCartList = wrapAsync(async (req, res) => {
     throw err;
   }
   await cartServices.deleteCartList(productId);
-  res.status(201).json({
+  res.status(200).json({
     message: '장바구니에서 삭제되었습니다.',
   });
 });
@@ -63,7 +63,7 @@ const getProductAmountInCart = wrapAsync(async (req, res) => {
     const productAmountInCart = await cartServices.getProductAmountInCart(
       userId
     );
-    res.status(201).json({
+    res.status(200).json({
       amount: productAmountInCart,
     });
   }

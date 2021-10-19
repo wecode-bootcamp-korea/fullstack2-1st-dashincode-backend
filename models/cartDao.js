@@ -24,7 +24,6 @@ const checkCartList = async (addedProduct, userId) => {
     AND
       c.product_id = ${productId}
     `;
-    console.log(typeof existingProduct.count);
   return existingProduct.count;
 }
 
@@ -56,37 +55,20 @@ const getCartList = async (userId) => {
     c.quantity,
     p.storage,
     p.description
-<<<<<<< HEAD
   FROM
-      products p
+    products p
   JOIN
     carts c
   ON
     c.product_id = p.id
   JOIN
-    products_thumbnails pt
+    products_thumbnails i
   ON
-    pt.product_id = p.id
+    i.product_id = p.id
   AND
-    pt.is_main = 1
+    i.is_main = 1
   WHERE
     c.user_id = ${userId}
-=======
-    FROM
-    products p
-  JOIN
-      carts c
-  ON
-      c.product_id = p.id
-  JOIN
-      products_thumbnails i
-  ON
-      i.product_id = p.id
-  AND
-      i.is_main = 1
-  WHERE
-      c.user_id = ${userId}
->>>>>>> main
     `;
   return products;
 };
