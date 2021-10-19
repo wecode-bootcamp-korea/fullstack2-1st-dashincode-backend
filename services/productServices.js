@@ -61,6 +61,33 @@ const getProductReviewList = async productId => {
   return reviewList;
 };
 
+//like API
+const getLikedProduct = async (productId, userId) => {
+  return await productDao.getLikedProduct(productId, userId);
+};
+
+const likeProduct = async (productId, userId) => {
+  const isProduct = await productDao.isProduct(productId);
+  if (!isProduct) {
+    const err = new Error('PRODUCT_NOT_EXIST');
+    err.status = 401;
+    throw err;
+  }
+  await productDao.addLike(productId, userId);
+  return true;
+};
+
+const unlikeProduct = async (productId, userId) => {
+  const isProduct = await productDao.isProduct(productId);
+  if (!isProduct) {
+    const err = new Error('PRODUCT_NOT_EXIST');
+    err.status = 401;
+    throw err;
+  }
+  await productDao.deleteLike(productId, userId);
+  return false;
+};
+
 export default {
   getCategory,
   getSpecialProduct,
@@ -68,5 +95,9 @@ export default {
   getProductInfo,
   getProductThumbnails,
   getProductDescriptionImage,
+  getProductCommentList,
+  getLikedProduct,
+  likeProduct,
+  unlikeProduct,
   getProductReviewList,
 };
