@@ -1,9 +1,7 @@
 import { userServices } from '../services';
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { ERRORS } from '../utils/error';
 
-dotenv.config();
 const { secret } = process.env;
 
 export const authMiddleware = () => {
