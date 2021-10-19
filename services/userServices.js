@@ -1,10 +1,8 @@
 import { userDao } from '../models';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
 import { ERRORS } from '../utils/error';
 
-dotenv.config();
 const { secret } = process.env;
 
 const getUser = async (email, password) => {
