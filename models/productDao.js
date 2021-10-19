@@ -163,12 +163,12 @@ const getProductDescriptionImage = async productId => {
 const getProductReviewList = async productId => {
   const reviewList = await prisma.$queryRaw`
     SELECT
-      c.product_id,
-      c.user_id,
+      c.product_id AS productId,
       u.nickname,
       c.scores,
       c.comment,
-      c.image_url
+      c.image_url AS imageUrl,
+      c.created_at
     FROM
       comments c
     JOIN
@@ -186,9 +186,9 @@ const getProductReviewList = async productId => {
 const getLikedProduct = async (productId, userId) => {
   const [isLiked] = await prisma.$queryRaw`
     SELECT COUNT(*) AS result
-    FROM 
-      likes 
-    WHERE 
+    FROM
+      likes
+    WHERE
       product_id=${productId}
     AND
       user_id=${userId}
@@ -198,10 +198,10 @@ const getLikedProduct = async (productId, userId) => {
 
 const addLike = async (productId, userId) => {
   return await prisma.$queryRaw`
-    INSERT INTO 
-      likes 
-      (product_id, user_id) 
-    VALUE 
+    INSERT INTO
+      likes
+      (product_id, user_id)
+    VALUE
       (${productId}, ${userId})
   `;
 };
@@ -209,10 +209,10 @@ const addLike = async (productId, userId) => {
 const deleteLike = async (productId, userId) => {
   return await prisma.$queryRaw`
     DELETE FROM
-      likes 
-    WHERE 
-      product_id=${productId} 
-    AND 
+      likes
+    WHERE
+      product_id=${productId}
+    AND
       user_id=${userId}
   `;
 };
@@ -220,9 +220,9 @@ const deleteLike = async (productId, userId) => {
 const isProduct = async productId => {
   const [isProduct] = await prisma.$queryRaw`
     SELECT COUNT(*) AS result
-    FROM 
-      products 
-    WHERE 
+    FROM
+      products
+    WHERE
       id=${productId}
   `;
   return isProduct.result;
