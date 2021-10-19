@@ -14,4 +14,9 @@ router.get('/:id/image', productController.getProductDescriptionImage);
 // comment API Test
 router.get('/:id/comment', productController.getProductCommentList);
 
+//like API
+router.get('/:id/like', productController.getLikedProduct);
+router.post('/:id/like', productController.likeProduct);
+router.delete('/:id/like', productController.unlikeProduct);
+
 export default router;

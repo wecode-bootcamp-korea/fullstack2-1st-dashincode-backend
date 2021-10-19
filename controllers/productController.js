@@ -47,6 +47,34 @@ const getProductCommentList = wrapAsync(async (req, res) => {
   res.json(commentList);
 });
 
+//like API
+const getLikedProduct = wrapAsync(async (req, res) => {
+  const productId = req.params.id;
+  const userId = req.user.id;
+  const isLiked = await productServices.getLikedProduct(productId, userId);
+  res.status(200).json({
+    data: isLiked === 1 ? true : false,
+  });
+});
+
+const likeProduct = wrapAsync(async (req, res) => {
+  const productId = req.params.id;
+  const userId = req.user.id;
+  const isLiked = await productServices.likeProduct(productId, userId);
+  res.status(200).json({
+    data: isLiked,
+  });
+});
+
+const unlikeProduct = wrapAsync(async (req, res) => {
+  const productId = req.params.id;
+  const userId = req.user.id;
+  const isLiked = await productServices.unlikeProduct(productId, userId);
+  res.status(200).json({
+    data: isLiked,
+  });
+});
+
 export default {
   getCategory,
   getSpecialProduct,
@@ -55,4 +83,7 @@ export default {
   getProductThumbNail,
   getProductDescriptionImage,
   getProductCommentList,
+  getLikedProduct,
+  likeProduct,
+  unlikeProduct,
 };
