@@ -46,7 +46,6 @@ const getProductReviewList = wrapAsync(async (req, res) => {
   res.json(reviewList);
 });
 
-//like API
 const getLikedProduct = wrapAsync(async (req, res) => {
   const productId = req.params.id;
   const userId = req.user.id;

@@ -61,7 +61,6 @@ const getProductReviewList = async productId => {
   return reviewList;
 };
 
-//like API
 const getLikedProduct = async (productId, userId) => {
   return await productDao.getLikedProduct(productId, userId);
 };
