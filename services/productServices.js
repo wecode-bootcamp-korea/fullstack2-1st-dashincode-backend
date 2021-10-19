@@ -95,9 +95,8 @@ export default {
   getProductInfo,
   getProductThumbnails,
   getProductDescriptionImage,
-  getProductCommentList,
+  getProductReviewList,
   getLikedProduct,
   likeProduct,
   unlikeProduct,
-  getProductReviewList,
 };
